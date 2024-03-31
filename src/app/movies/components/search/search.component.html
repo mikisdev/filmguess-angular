@@ -20,12 +20,16 @@
 
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
 
-        <mat-option *ngFor="let movie of movies" class="bg-[#202020]">
+        <mat-option *ngFor="let movie of movies" [routerLink]="['/movies', movie.id]">
           <div class="flex items-center">
             <img [src]="movie.poster_path | posterPatch" [alt]="movie.title" class="h-16 max-w-11 my-2 object-cover">
             <span class="ml-2">{{ movie.title }}</span>
           </div>
         </mat-option>
+
+        <mat-option
+          *ngIf="movies.length === 0 && searchInput.value && searchInput.value.length > 0"
+        >No se encontró nada con el término {{ searchInput.value }}</mat-option>
 
       </mat-autocomplete>
 

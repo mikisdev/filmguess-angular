@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { GamePageComponent } from './pages/game-page/game-page.component';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { SearchComponent } from './components/search/search.component';
+import { MoviePageComponent } from './pages/movie-page/movie-page.component';
 
 
 
@@ -26,6 +27,7 @@ import { SearchComponent } from './components/search/search.component';
     NavbarComponent,
     GamePageComponent,
     SearchComponent,
+    MoviePageComponent,
   ],
   imports: [
     CommonModule,

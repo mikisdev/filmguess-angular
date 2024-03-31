@@ -1,0 +1,24 @@
+.background-image {
+  height: 500px; /* Altura fija del contenedor */
+  background-size: cover; /* Cubre el ancho completo y recorta la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  /* Puedes ajustar otros estilos según tus necesidades */
+  border-radius: 25px;
+
+}
+
+.image-filter{
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 25px;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(10px); /* Ajusta el valor según el nivel de desenfoque que desees */
+  z-index: -1;
+}
+

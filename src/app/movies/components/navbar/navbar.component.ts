@@ -9,9 +9,9 @@ export class NavbarComponent {
 
 
   navbarItem = [
-    {label: 'Home', url: './'},
+    {label: 'Home', url: 'home'},
     {label: 'Películas favoritas', url: './'},
-    {label: 'Adivinar la película', url: './'},
+    {label: 'Adivinar la película', url: 'game'},
   ]
 
 }

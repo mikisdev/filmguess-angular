@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { Movie } from '../../interfaces/movie.interface';
 import { MovieService } from '../../services/movies.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'movie-search',

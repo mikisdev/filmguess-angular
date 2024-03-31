@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Movie } from '../interfaces/movie.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MovieResponse } from '../interfaces/movie-response.interface';
 import { enviroments } from '../../../environments/enviroments';
+import { response } from 'express';
 
 @Injectable({providedIn: 'root'})
 export class MovieService {
@@ -12,7 +13,7 @@ export class MovieService {
   private apiKey: string = enviroments.apiKey
   private params = new HttpParams()
   .set('api_key', this.apiKey)
-  .set('languaje', 'es-ES')
+  .set('language', 'es-ES')
   .set('include_adult', false)
 
   constructor(private http: HttpClient) { }
@@ -54,6 +55,16 @@ export class MovieService {
     return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
       .pipe(
         map((response: MovieResponse) => response.results)
+      )
+  }
+
+  getMovieById(id: string) :Observable<Movie>{
+
+    const params = this.params
+
+    return this.http.get<Movie>(`${this.baseUrl}/movie/${id}`,{params})
+      .pipe(
+        map((response: Movie) => response)
       )
   }
 
