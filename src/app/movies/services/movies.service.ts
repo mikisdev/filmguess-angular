@@ -57,4 +57,14 @@ export class MovieService {
       )
   }
 
+  searchMovies(query: string) :Observable<Movie[]> {
+
+    const params = this.params.append('query', query)
+
+    return this.http.get<MovieResponse>(`${this.baseUrl}/search/movie`,{params})
+      .pipe(
+        map((response: MovieResponse) => response.results)
+      )
+  }
+
 }

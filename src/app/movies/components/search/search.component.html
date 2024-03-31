@@ -1,0 +1,37 @@
+
+
+<div class="container mx-auto mt-24">
+  <form class="flex justify-center text-white">
+
+      <input type="text"
+        [formControl]="searchInput"
+        placeholder="Busca una película"
+        (input)="searchMovie()"
+        [matAutocomplete]="auto"
+        class="w-full
+          h-10
+          px-6
+          mx-24
+          bg-[#202020]
+          text-white
+          rounded-3xl
+          my-input"
+      >
+
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+
+        <mat-option *ngFor="let movie of movies" class="bg-[#202020]">
+          <div class="flex items-center">
+            <img [src]="movie.poster_path | posterPatch" [alt]="movie.title" class="h-16 max-w-11 my-2 object-cover">
+            <span class="ml-2">{{ movie.title }}</span>
+          </div>
+        </mat-option>
+
+      </mat-autocomplete>
+
+
+
+  </form>
+
+</div>
+

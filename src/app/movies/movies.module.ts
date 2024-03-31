@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { CardComponent } from './components/card/card.component';
@@ -11,6 +12,7 @@ import { SliderComponent } from './components/slider/slider.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GamePageComponent } from './pages/game-page/game-page.component';
 import { MoviesRoutingModule } from './movies-routing.module';
+import { SearchComponent } from './components/search/search.component';
 
 
 
@@ -23,10 +25,13 @@ import { MoviesRoutingModule } from './movies-routing.module';
     SliderComponent,
     NavbarComponent,
     GamePageComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
+
 
     MoviesRoutingModule
   ],

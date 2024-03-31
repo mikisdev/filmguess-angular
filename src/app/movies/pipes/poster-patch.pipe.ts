@@ -5,7 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PosterPatchPipe implements PipeTransform {
 
-  transform(value: string ): string {
+  transform(value: string | null ): string {
+    if (!value) return 'https://i.stack.imgur.com/GNhxO.png'
+
     return `https://image.tmdb.org/t/p/w500/${value}`;
   }
 

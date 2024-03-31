@@ -10,8 +10,8 @@ export class NavbarComponent {
 
   navbarItem = [
     {label: 'Home', url: './'},
-    {label: 'Buscar películas', url: './'},
     {label: 'Películas favoritas', url: './'},
+    {label: 'Adivinar la película', url: './'},
   ]
 
 }
