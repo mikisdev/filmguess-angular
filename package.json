@@ -6,9 +6,12 @@
     "start": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "build:href": "ng build --base-href ./",
+    "build:github": "npm run delete:docs && npm run build:href && npm run copy:dist",
     "test": "ng test",
     "serve:ssr:moviesApp": "node dist/movies-app/server/server.mjs",
-    "delete:docs": "del docs"
+    "delete:docs": "del docs",
+    "copy:dist": "copyfiles dist/movies-app/browser/* ./docs -f"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +39,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "copyfiles": "^2.4.1",
     "del-cli": "^5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
