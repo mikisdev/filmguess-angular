@@ -13,6 +13,7 @@ export class ListPageComponent implements OnInit{
   public popularMovies: Movie[] = []
   public nowPlayingMovies: Movie[] = []
   public upcomingMovies: Movie[] = []
+  public topRatedMovies: Movie[] = []
 
 
   constructor(private movieService: MovieService){}
@@ -24,8 +25,11 @@ export class ListPageComponent implements OnInit{
     this.movieService.getNowPlaying(1)
       .subscribe( movies => this.nowPlayingMovies = movies)
 
-     this.movieService.getUpcoming(1)
+    this.movieService.getUpcoming(1)
       .subscribe( movies => this.upcomingMovies = movies)
+
+    this.movieService.getTopRated(1)
+      .subscribe( movies => this.topRatedMovies = movies)
 
 
   }

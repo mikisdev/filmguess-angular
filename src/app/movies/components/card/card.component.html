@@ -17,7 +17,6 @@
     </div> -->
 
 
-
 <div class="w-52 h-auto p-4 m-2
     rounded-lg
     shadow-md
@@ -35,8 +34,8 @@
         <p class="text-sm text-white">{{ movie.release_date | date: 'MM/dd/yyyy'}}</p>
       </div>
       <div class="flex justify-between">
-        <span class="text-sm text-slate-500">Visualizaciones</span>
-        <p class="text-sm text-white">{{ movie.popularity }}</p>
+        <span class="text-sm text-slate-500">Valoración</span>
+        <p class="text-sm text-white">{{ (movie.vote_average / 10) | percent}}</p>
       </div>
     </div>
 

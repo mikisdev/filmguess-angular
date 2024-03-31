@@ -8,6 +8,8 @@ import { ListPageComponent } from './pages/list-page/list-page.component';
 
 import { MaterialModule } from '../material/material.module';
 import { SliderComponent } from './components/slider/slider.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { GamePageComponent } from './pages/game-page/game-page.component';
 
 
 
@@ -18,6 +20,8 @@ import { SliderComponent } from './components/slider/slider.component';
     PosterPatchPipe,
     ListPageComponent,
     SliderComponent,
+    NavbarComponent,
+    GamePageComponent,
   ],
   imports: [
     CommonModule,

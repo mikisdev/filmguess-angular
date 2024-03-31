@@ -1,9 +1,1 @@
 
-.movie-card {
-  position: relative; /* Importante para el posicionamiento */
-  z-index: 1; /* Asegura que las tarjetas estén una encima de otra en el eje Z */
-}
-
-.movie-card:hover{
-  z-index: 2;
-}

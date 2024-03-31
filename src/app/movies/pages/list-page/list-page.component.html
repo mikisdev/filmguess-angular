@@ -1,35 +1,4 @@
-<!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
-  <div
-    *ngFor="let movie of movies"
-    class="bg-[#202020]
-    rounded-lg
-    overflow-hidden
-    shadow-md
-    text-white
-    hover:shadow-lg
-    hover:scale-110
-    hover:z-10
-    hover:position: relative
-    transition-transform
-    group
-    "
-  >
-    <movies-card [movie]="movie" class=""></movies-card>
-  </div>
-</div> -->
 
-<div class="mt-24 shadow-2xl">
-  <h2 class="text-white text-2xl">Peliculas populares</h2>
-  <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden shadow-2xl">
-
-    <div *ngFor="let movie of popularMovies" class="text-white">
-
-      <movies-card [movie]="movie"></movies-card>
-
-    </div>
-
-  </div>
-</div>
 
 <div class="mt-24 shadow-2xl">
   <h2 class="text-white text-2xl">Estrenos</h2>
@@ -53,12 +22,20 @@
       <movies-card [movie]="movie"></movies-card>
 
     </div>
-
   </div>
 </div>
 
+<div class="mt-24 shadow-2xl">
+  <h2 class="text-white text-2xl">Peliculas populares</h2>
+  <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden shadow-2xl">
 
+    <div *ngFor="let movie of topRatedMovies" class="text-white">
 
+      <movies-card [movie]="movie"></movies-card>
 
+    </div>
+
+  </div>
+</div>
 
 

@@ -47,4 +47,14 @@ export class MovieService {
       )
   }
 
+  getTopRated(page: number = 1) :Observable<Movie[]> {
+
+    const params = this.params.append('page', page)
+
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
+      .pipe(
+        map((response: MovieResponse) => response.results)
+      )
+  }
+
 }
