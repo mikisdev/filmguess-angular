@@ -10,6 +10,7 @@ import { MaterialModule } from '../material/material.module';
 import { SliderComponent } from './components/slider/slider.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GamePageComponent } from './pages/game-page/game-page.component';
+import { MoviesRoutingModule } from './movies-routing.module';
 
 
 
@@ -25,7 +26,9 @@ import { GamePageComponent } from './pages/game-page/game-page.component';
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+
+    MoviesRoutingModule
   ],
   exports: [
     LayoutPageComponent,
