@@ -1,7 +1,12 @@
 
 
 <div class="mt-16 shadow-2xl">
-  <h2 class="text-white text-2xl">Estrenos</h2>
+  <a class="
+  text-white text-2xl
+    cursor-pointer
+  md:hover:text-blue-700"
+  [routerLink]="'/movies/now-playing'"
+  >En cartelera</a>
   <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
 
     <div *ngFor="let movie of nowPlayingMovies" class="text-white">
@@ -14,7 +19,12 @@
 </div>
 
 <div class="mt-24 shadow-2xl">
-  <h2 class="text-white text-2xl">Proximamente</h2>
+  <a class="
+  text-white text-2xl
+    cursor-pointer
+  md:hover:text-blue-700"
+  [routerLink]="'/movies/upcoming'"
+  >Proximamente...</a>
   <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
 
     <div *ngFor="let movie of upcomingMovies" class="text-white">
@@ -26,7 +36,12 @@
 </div>
 
 <div class="mt-24 shadow-2xl">
-  <h2 class="text-white text-2xl">Peliculas populares</h2>
+  <a class="
+  text-white text-2xl
+    cursor-pointer
+  md:hover:text-blue-700"
+  [routerLink]="'/movies/top-rated'"
+  >Taquillazos</a>
   <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden shadow-2xl">
 
     <div *ngFor="let movie of topRatedMovies" class="text-white">

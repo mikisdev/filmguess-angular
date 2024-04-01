@@ -1,0 +1,21 @@
+
+<div class="
+  grid grid-cols-1
+  md:grid-cols-3
+  lg:grid-cols-5
+  xl:grid-cols-6
+  justify-items-center
+  mt-16"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="700"
+  (scrolled)="onScroll()"
+>
+
+  <div *ngFor="let movie of topRatedMovies" class="text-white">
+
+    <movies-grid-card [movie]="movie"></movies-grid-card>
+
+  </div>
+
+</div>
