@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
-import { Movie } from '../interfaces/movie.interface';
+import { Movie } from '../../shared/interfaces/movie.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { MovieResponse } from '../interfaces/movie-response.interface';
+import { MovieResponse } from '../../shared/interfaces/movie-response.interface';
 import { enviroments } from '../../../environments/enviroments';
-import { response } from 'express';
 
 @Injectable({providedIn: 'root'})
 export class MovieService {
@@ -78,4 +77,46 @@ export class MovieService {
       )
   }
 
+
+  getRandomMovie() :Observable<Movie>{
+
+    const randomPage: number = Math.floor(Math.random() * 100) + 1;
+    const randomIndex: number = Math.floor(Math.random() * 20) + 1;
+
+    const params = this.params.append('page', randomPage)
+
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
+    .pipe(
+      map((response: MovieResponse) => response.results[ randomIndex - 1 ]),
+    )
+
+  }
+
+
 }
+
+
+// getRandomMovie() :Observable<Movie>{
+
+//   let randomPage: number
+//   let randomIndex: number
+//   let movie: Observable<Movie>
+//   let posterPatch: string | null
+
+//   do{
+//     randomPage = Math.floor(Math.random() * 100) + 1
+//     randomIndex = Math.floor(Math.random() * 20) + 1
+//     let params = this.params.append('page', randomPage)
+
+//     movie = this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
+//     .pipe(
+//       map((response: MovieResponse) => response.results[ randomIndex - 1 ]),
+
+//     )
+
+
+//   }while(posterPatch==null)
+
+
+//   return movie
+// }

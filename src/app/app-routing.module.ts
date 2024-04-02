@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import('./movies/movies.module').then( m => m.MoviesModule)
   },
   {
+    path: 'game',
+    loadChildren: () => import('./game/game.module').then( m => m.GameModule)
+  },
+  {
     path: '404',
     component: Error404PageComponent
   },

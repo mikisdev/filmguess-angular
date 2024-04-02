@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'movie-navbar',
+  selector: 'shared-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-
 
   navbarItem = [
     {label: 'Home', url: 'home'},
     {label: 'Películas favoritas', url: './'},
-    {label: 'Adivinar la película', url: 'game'},
+    {label: 'Adivinar la película', url: '../game'},
   ]
 
 }

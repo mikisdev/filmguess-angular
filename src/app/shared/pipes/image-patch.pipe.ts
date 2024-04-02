@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'posterPatch'
+  name: 'imagePatch'
 })
-export class PosterPatchPipe implements PipeTransform {
+export class ImagePatchPipe implements PipeTransform {
 
   transform(value: string | null ): string {
     if (!value) return 'https://i.stack.imgur.com/GNhxO.png'

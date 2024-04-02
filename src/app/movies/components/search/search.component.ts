@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Movie } from '../../interfaces/movie.interface';
+import { Movie } from '../../../shared/interfaces/movie.interface';
 import { MovieService } from '../../services/movies.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 

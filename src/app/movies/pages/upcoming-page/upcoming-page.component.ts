@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Movie } from '../../interfaces/movie.interface';
+import { Movie } from '../../../shared/interfaces/movie.interface';
 import { MovieService } from '../../services/movies.service';
 
 @Component({

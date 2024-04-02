@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Movie } from '../../interfaces/movie.interface';
+import { Movie } from '../../../shared/interfaces/movie.interface';
 
 @Component({
   selector: 'movies-grid-card',
