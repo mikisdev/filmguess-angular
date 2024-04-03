@@ -48,6 +48,8 @@ export class MoviePageComponent implements OnInit{
     ) .subscribe(
       providers => {
 
+        if(!providers) return
+
         this.providers = providers.flatrate
         console.log(this.providers)
         this.background = 'https://image.tmdb.org/t/p/original/' +this.movie?.backdrop_path!

@@ -11,9 +11,9 @@
 
 </div>
 
-<div *ngIf="movie; else divLoading" class="container background-image mt-24" [ngStyle]="{'background-image': 'url(' + background + ')'}">
+<div *ngIf="movie; else divLoading" class="container background-image mt-24 " [ngStyle]="{'background-image': 'url(' + background + ')'}">
 
-  <div class="image-filter w-full h-full overflow-hidden">
+  <div class="image-filter w-full h-full overflow-hidden pb-14">
       <div></div>
       <h2 class="flex justify-center text-white text-4xl font-bold mt-4">{{movie.title}}</h2>
 
@@ -27,7 +27,19 @@
         </div>
       </div>
 
+      <section *ngIf="providers" class="w-full min-h-full flex gap-6 mt-10 justify-end pr-4">
+
+        <div *ngFor="let provider of providers">
+          <a class="flex flex-col">
+            <img [src]="provider.logo_path | imagePatch" [alt]="provider.provider_name" class="w-24 rounded-xl">
+          </a>
+        </div>
+
+    </section>
+
   </div>
+
+
 
 </div>
 

@@ -1,5 +1,5 @@
 .background-image {
-  height: 500px; /* Altura fija del contenedor */
+  height: auto; /* Altura fija del contenedor */
   background-size: cover; /* Cubre el ancho completo y recorta la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   /* Puedes ajustar otros estilos según tus necesidades */
