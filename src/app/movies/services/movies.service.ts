@@ -1,19 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
 import { Movie } from '../../shared/interfaces/movie.interface';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MovieResponse } from '../../shared/interfaces/movie-response.interface';
 import { enviroments } from '../../../environments/enviroments';
+import { MovieProvidersResponse, Result } from '../../shared/interfaces/provider-response.interface';
+import { response } from 'express';
 
 @Injectable({providedIn: 'root'})
 export class MovieService {
 
   private baseUrl: string = enviroments.baseUrl
   private apiKey: string = enviroments.apiKey
+  private auth: string = enviroments.auth
   private params = new HttpParams()
   .set('api_key', this.apiKey)
   .set('language', 'es-ES')
   .set('include_adult', false)
+
+  private headers = new HttpHeaders()
+  .set('Authorization', this.auth)
 
   constructor(private http: HttpClient) { }
 
@@ -80,19 +86,25 @@ export class MovieService {
 
   getRandomMovie() :Observable<Movie[]>{
 
-
     const params = this.params.append('page', (Math.floor(Math.random() * 100) + 1))
-
-    debugger;
-
 
     return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
     .pipe(
       map((response: MovieResponse) => response.results)
     )
-
-
   }
+
+  getMovieProviders(id: number): Observable<Result> {
+    const headers = this.headers;
+
+    return this.http.get<MovieProvidersResponse>(`${this.baseUrl}/movie/${id}/watch/providers`, { headers }).pipe(
+      map((response: MovieProvidersResponse) => {
+        console.log(response.results['ES'])
+        return response.results['ES'];
+      })
+    );
+  }
+
 
 
 }
