@@ -78,17 +78,19 @@ export class MovieService {
   }
 
 
-  getRandomMovie() :Observable<Movie>{
+  getRandomMovie() :Observable<Movie[]>{
 
-    const randomPage: number = Math.floor(Math.random() * 100) + 1;
-    const randomIndex: number = Math.floor(Math.random() * 20) + 1;
 
-    const params = this.params.append('page', randomPage)
+    const params = this.params.append('page', (Math.floor(Math.random() * 100) + 1))
+
+    debugger;
+
 
     return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
     .pipe(
-      map((response: MovieResponse) => response.results[ randomIndex - 1 ]),
+      map((response: MovieResponse) => response.results)
     )
+
 
   }
 

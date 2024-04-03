@@ -1,0 +1,12 @@
+<div *ngIf="movie" class="flex flex-col mx-auto items-center w-52 md:w-60 lg:w-72 xl:w-72 3xl:w-96 mt-24">
+
+  <div>
+    <img [src]="movie!.poster_path | imagePatch" [alt]="movie!.title" class="xl:w-full rounded-lg shadow-lg">
+    <span class="text-white text-lg font-semibold mt-2 text-center">{{movie!.title}}</span>
+    <h2 class="text-white text-2xl font-bold mt-10">HAS FALLADO...</h2>
+    <button class="bg-[#2b2b2b] hover:bg-[rgba(255, 104, 58, 183)] text-white font-bold py-2 px-4 rounded-3xl mt-5 "
+      [routerLink]="'/game'">
+      ¿Quieres volver a jugar?
+    </button>
+  </div>
+  <div>

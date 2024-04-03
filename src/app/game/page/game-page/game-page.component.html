@@ -1,40 +1,62 @@
-<div *ngIf="movie" class="flex flex-col mx-auto items-center mt-16 w-52 md:w-60 lg:w-72 xl:w-72 3xl:w-96">
 
-  <img [src]="movie.poster_path | imagePatch" [alt]="movie.title"
-    [ngStyle]="{'filter': 'blur(' + guessBlur +'px' + ')'}" class="xl:w-full rounded-lg shadow-lg">
+<div *ngIf="movie" class="flex flex-col mx-auto items-center w-52 md:w-60 lg:w-72 xl:w-72 3xl:w-96 mt-24">
+
+    <img [src]="movie.poster_path | imagePatch" [alt]="movie.title"
+      [ngStyle]="{'filter': 'blur(' + guessBlur +'px' + ')'}" class="xl:w-full rounded-lg shadow-lg">
 
 
-  <form class="flex text-white mt-14 w-96">
+    <form class="flex text-white mt-14 w-96">
 
-    <input type="text" [formControl]="searchInput" placeholder="Busca una película" (input)="searchMovie()"
-      [matAutocomplete]="auto" class="w-full
+      <input type="text" [formControl]="searchInput" placeholder="Busca una película" (input)="searchMovie()"
+        [matAutocomplete]="auto" class="w-full
               h-10
               px-6
               bg-[#202020]
               text-white
               rounded-3xl
-              my-input"
-              >
+              my-input">
 
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
 
-      <mat-option *ngFor="let movie of movies" [value]="movie.title">
-        <span class="ml-2">{{ movie.title }}</span>
-      </mat-option>
+        <mat-option *ngFor="let movie of movies" [value]="movie.title">
+          <span class="ml-2">{{ movie.title }}</span>
+        </mat-option>
 
-    </mat-autocomplete>
+      </mat-autocomplete>
 
-  </form>
+    </form>
 
 
-  <div class="flex justify-end w-full">
-    <button class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-full mt-5 "
+    <div class="flex justify-end w-full">
+      <button class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl mt-5 "
+        (click)="guessMovie()">
+        Adivinar
+      </button>
+    </div>
+
+  <!-- TODO: Implementar cuando arregle el problema del recargar la página -->
+
+  <!-- <ng-template [ngIf]="win">
+    <img [src]="movie.poster_path | imagePatch" [alt]="movie.title"
+    class="xl:w-full rounded-lg shadow-lg">
+    <span class="text-white text-lg font-semibold mt-2 text-center">{{movie.title}}</span>
+    <h2 class="text-white text-2xl font-bold mt-10">¡HAS ACERTADO!</h2>
+    <button class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl mt-5 "
     (click)="guessMovie()">
-    Adivinar
+    ¿Quieres volver a jugar?
   </button>
-  </div>
+  </ng-template> -->
 
+  <!-- <ng-template [ngIf]="lose">
+    <img [src]="movie.poster_path | imagePatch" [alt]="movie.title"
+    class="xl:w-full rounded-lg shadow-lg">
+    <span class="text-white text-lg font-semibold mt-2 text-center">{{movie.title}}</span>
+    <h2 class="text-white text-2xl font-bold mt-10">HAS FALLADO...</h2>
+    <button class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl mt-5 "
+    (click)="reloadPage()">
+    ¿Quieres volver a jugar?
+  </button>
+  </ng-template> -->
 
 
 </div>
-

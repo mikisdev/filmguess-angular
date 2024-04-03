@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Movie } from '../../../shared/interfaces/movie.interface';
 import { MovieService } from '../../../movies/services/movies.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'game-page',
   templateUrl: './game-page.component.html',
   styles: ``
 })
-export class GamePageComponent implements OnInit{
+export class GamePageComponent implements OnInit, OnDestroy{
 
-  movie?: Movie
+  movie: Movie | null = null
   movies: Movie[] = []
   guessBlur: number = 20
 
@@ -21,13 +23,27 @@ export class GamePageComponent implements OnInit{
 
 
 
-  constructor(private moviesService: MovieService){}
+  constructor(
+    private moviesService: MovieService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+    ){}
+  ngOnDestroy(): void {
+    this.movie = null
+  }
+
 
   ngOnInit(): void {
-    this.moviesService.getRandomMovie()
-      .subscribe(movie => this.movie = movie)
+
+    this.moviesService.getPopular(this.getRandomNumber(1, 100))
+      .subscribe( movies => this.movie = movies[this.getRandomNumber(0, 19)] )
 
   }
+
+  private getRandomNumber(min: number, max: number) :number {
+    return Math.floor(Math.random() * max) - min;
+  }
+
 
   searchMovie() :void {
     const value: string = this.searchInput.value || ''
@@ -42,6 +58,10 @@ export class GamePageComponent implements OnInit{
   guessMovie(): void{
 
     console.log(this.movie?.title)
+
+    if(this.searchInput.value=== this.movie?.title) {
+      this.router.navigate(['/game/win', this.movie.id])
+    }
 
     if(this.searchInput.value!== this.movie?.title){
       if(this.guessCounter!==0){
@@ -66,18 +86,19 @@ export class GamePageComponent implements OnInit{
           case 1:
             this.guessBlur = 0
             this.guessCounter --
-            console.log('LOSE')
-
+            this.router.navigate(['/game/lose', this.movie!.id])
             break
         }
         console.log(this.guessCounter)
       }
-    } else{
-      console.log('WIN')
     }
 
     this.searchInput.setValue('')
 
+  }
+
+  reloadPage(){
+    window.location.reload()
   }
 
 }

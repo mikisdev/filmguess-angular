@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 export class NavbarComponent {
 
   navbarItem = [
-    {label: 'Home', url: 'home'},
-    {label: 'Películas favoritas', url: './'},
-    {label: 'Adivinar la película', url: '../game'},
+    {label: 'Home', icon: 'movie', url: '../movies'},
+    {label: 'Películas favoritas', icon: 'star', url: './'},
+    {label: 'Adivinar la película', icon: 'videogame_asset', url: '../game'},
   ]
 
 }
