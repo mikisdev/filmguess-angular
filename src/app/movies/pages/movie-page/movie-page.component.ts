@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs';
 import { MovieService } from '../../services/movies.service';
 import { Movie } from '../../../shared/interfaces/movie.interface';
 import { Provider } from '../../../shared/interfaces/provider-response.interface';
+import { Cast } from '../../../shared/interfaces/credit-response.interface';
 
 @Component({
   selector: 'app-movie-page',
@@ -15,6 +16,7 @@ export class MoviePageComponent implements OnInit{
 
   movie?: Movie
   providers?: Provider[] = []
+  casts?: Cast[]
 
   background: string =''
   poster: string =''
@@ -52,16 +54,27 @@ export class MoviePageComponent implements OnInit{
 
         this.providers = providers.flatrate
         console.log(this.providers)
-        this.background = 'https://image.tmdb.org/t/p/original/' +this.movie?.backdrop_path!
-        this.poster = 'https://image.tmdb.org/t/p/original/' +this.movie?.poster_path!
         return
       }
     )
-  }
 
+    this.activatedRoute.params
+    .pipe(
+      switchMap( ({id}) => this.moviesService.getMovieCast(id))
+    ) .subscribe(
+      casts => {
 
-  click(){
-    console.log(this.background)
+        if(!casts) return
+
+        if(casts.length > 12) {
+          this.casts = casts.slice(0, 12)
+          return
+        }
+
+        this.casts = casts
+        return
+      }
+    )
   }
 
 }

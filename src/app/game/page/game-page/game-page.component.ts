@@ -35,14 +35,16 @@ export class GamePageComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    this.moviesService.getPopular(this.getRandomNumber(1, 100))
-      .subscribe( movies => this.movie = movies[this.getRandomNumber(0, 19)] )
+    // this.moviesService.getPopular(this.getRandomNumber(1, 100))
+    //   .subscribe( movies => this.movie = movies[this.getRandomNumber(0, 19)] )
+    this.moviesService.getRandomMovie()
+      .subscribe( movie => this.movie = movie)
 
   }
 
-  private getRandomNumber(min: number, max: number) :number {
-    return Math.floor(Math.random() * max) - min;
-  }
+  // private getRandomNumber(min: number, max: number) :number {
+  //   return Math.floor(Math.random() * max) - min;
+  // }
 
 
   searchMovie() :void {

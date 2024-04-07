@@ -1,0 +1,16 @@
+<div class="w-52 h-auto p-4 m-2
+    rounded-lg
+    shadow-md
+    hover:shadow-lg
+    hover:scale-110
+    transition-transform
+    cursor-pointer
+    group"
+  >
+  <img [src]="cast.profile_path | imagePatch" [alt]="cast.name" class="rounded-lg w-52 h-64 object-cover">
+  <div class="p-3 flex flex-col gap-5 ">
+    <span class="text-lg font-semibold text-balance">{{ cast.name }}</span>
+    <span class="text-lg text-balance">{{ cast.character }}</span>
+
+  </div>
+</div>

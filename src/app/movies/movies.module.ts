@@ -16,6 +16,7 @@ import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.compo
 
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
+import { CastingCardComponent } from './components/casting-card/casting-card.component';
 
 
 
@@ -31,6 +32,7 @@ import { SharedModule } from '../shared/shared.module';
     GridCardComponent,
     UpcomingPageComponent,
     TopRatedPageComponent,
+    CastingCardComponent,
 
   ],
   imports: [

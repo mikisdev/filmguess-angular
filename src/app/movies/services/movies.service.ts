@@ -1,11 +1,12 @@
 import { Injectable, Provider } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { Movie } from '../../shared/interfaces/movie.interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MovieResponse } from '../../shared/interfaces/movie-response.interface';
 import { enviroments } from '../../../environments/enviroments';
 import { MovieProvidersResponse, Result } from '../../shared/interfaces/provider-response.interface';
 import { response } from 'express';
+import { Cast, CreditResponse } from '../../shared/interfaces/credit-response.interface';
 
 @Injectable({providedIn: 'root'})
 export class MovieService {
@@ -84,14 +85,14 @@ export class MovieService {
   }
 
 
-  getRandomMovie() :Observable<Movie[]>{
+  getRandomMovie(): Observable<Movie> {
 
-    const params = this.params.append('page', (Math.floor(Math.random() * 100) + 1))
+    const params = this.params.append('page', (Math.floor(Math.random() * 100) + 1));
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
-    .pipe(
-      map((response: MovieResponse) => response.results)
-    )
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`, { params })
+      .pipe(
+        switchMap((response: MovieResponse) => of(response.results[Math.floor(Math.random() * 19) + 0])) // Use switchMap for side effects (if necessary)
+      );
   }
 
   getMovieProviders(id: number): Observable<Result> {
@@ -105,6 +106,17 @@ export class MovieService {
     );
   }
 
+
+  getMovieCast(id: number) :Observable<Cast[]> {
+
+    const params = this.params
+
+    return this.http.get<CreditResponse>(`${this.baseUrl}/movie/${id}/credits`,{params})
+      .pipe(
+        switchMap( (response: CreditResponse) => of(response.cast))
+      )
+
+  }
 
 
 }

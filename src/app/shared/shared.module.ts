@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { Error404PageComponent } from './pages/error404-page/error404-page.component';
 import { ImagePatchPipe } from './pipes/image-patch.pipe';
-import { NavbarComponent } from './components/menubar/navbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { MaterialModule } from '../material/material.module';
 
@@ -14,7 +14,6 @@ import { MaterialModule } from '../material/material.module';
     Error404PageComponent,
     ImagePatchPipe,
     NavbarComponent,
-
   ],
   imports: [
     CommonModule,

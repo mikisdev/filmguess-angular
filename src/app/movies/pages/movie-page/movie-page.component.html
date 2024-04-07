@@ -7,9 +7,7 @@
 </ng-template>
 
 
-<div *ngIf="movie; else divLoading" class="background w-screen h-screen" [ngStyle]="{'background-image': 'url(' + background + ')'}">
-
-</div>
+<div *ngIf="movie; else divLoading" class="background w-screen h-screen" [ngStyle]="{'background-image': 'url(' + background + ')'}"></div>
 
 <div *ngIf="movie; else divLoading" class="container background-image mt-24 " [ngStyle]="{'background-image': 'url(' + background + ')'}">
 
@@ -17,7 +15,7 @@
       <div></div>
       <h2 class="flex justify-center text-white text-4xl font-bold mt-4">{{movie.title}}</h2>
 
-      <div class="flex mt-20 items-center ml-20 ">
+      <div class="flex mt-16 items-center ml-20 ">
         <img [src]="poster" [alt]="movie.title" class="w-48 h-auto rounded-lg">
 
         <div class="flex flex-col  ml-16 md:mr-28 xl:mr-48 2xl:mr-56 ">
@@ -40,6 +38,15 @@
   </div>
 
 
+</div>
+
+<div class="flex flex-nowrap overflow-x-auto overflow-y-hidden mt-4 ">
+
+  <div *ngFor="let cast of casts" class="text-white">
+
+    <movie-casting-card [cast]="cast"></movie-casting-card>
+
+  </div>
 
 </div>
 
