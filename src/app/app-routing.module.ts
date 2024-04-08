@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./game/game.module').then( m => m.GameModule)
   },
   {
+    path: 'actor',
+    loadChildren: () => import('./actors/actors.module').then( m => m.ActorsModule)
+  },
+  {
     path: '404',
     component: Error404PageComponent
   },

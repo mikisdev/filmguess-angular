@@ -14,6 +14,7 @@ export class MovieService {
   private baseUrl: string = enviroments.baseUrl
   private apiKey: string = enviroments.apiKey
   private auth: string = enviroments.auth
+
   private params = new HttpParams()
   .set('api_key', this.apiKey)
   .set('language', 'es-ES')
