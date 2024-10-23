@@ -29,7 +29,7 @@ export class MovieService {
 
     const params = this.params.append('page', page)
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/popular`,{params})
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/popular`,{params, headers: this.headers})
       .pipe(
         map((response: MovieResponse) => response.results)
       )
@@ -39,7 +39,7 @@ export class MovieService {
 
     const params = this.params.append('page', page)
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/now_playing`,{params})
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/now_playing`,{params, headers: this.headers})
       .pipe(
         map((response: MovieResponse) => response.results)
       )
@@ -49,7 +49,7 @@ export class MovieService {
 
     const params = this.params.append('page', page)
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/upcoming`,{params})
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/upcoming`,{params, headers: this.headers})
       .pipe(
         map((response: MovieResponse) => response.results)
       )
@@ -59,7 +59,7 @@ export class MovieService {
 
     const params = this.params.append('page', page)
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params})
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`,{params, headers: this.headers})
       .pipe(
         map((response: MovieResponse) => response.results)
       )
@@ -69,7 +69,7 @@ export class MovieService {
 
     const params = this.params
 
-    return this.http.get<Movie>(`${this.baseUrl}/movie/${id}`,{params})
+    return this.http.get<Movie>(`${this.baseUrl}/movie/${id}`,{params, headers: this.headers})
       .pipe(
         map((response: Movie) => response)
       )
@@ -79,7 +79,7 @@ export class MovieService {
 
     const params = this.params.append('query', query)
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/search/movie`,{params})
+    return this.http.get<MovieResponse>(`${this.baseUrl}/search/movie`,{params, headers: this.headers})
       .pipe(
         map((response: MovieResponse) => response.results)
       )
@@ -90,16 +90,15 @@ export class MovieService {
 
     const params = this.params.append('page', (Math.floor(Math.random() * 100) + 1));
 
-    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`, { params })
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/top_rated`, { params, headers: this.headers })
       .pipe(
         switchMap((response: MovieResponse) => of(response.results[Math.floor(Math.random() * 19) + 0])) // Use switchMap for side effects (if necessary)
       );
   }
 
   getMovieProviders(id: number): Observable<Result> {
-    const headers = this.headers;
 
-    return this.http.get<MovieProvidersResponse>(`${this.baseUrl}/movie/${id}/watch/providers`, { headers }).pipe(
+    return this.http.get<MovieProvidersResponse>(`${this.baseUrl}/movie/${id}/watch/providers`, { headers: this.headers }).pipe(
       map((response: MovieProvidersResponse) => {
         console.log(response.results['ES'])
         return response.results['ES'];
@@ -112,7 +111,7 @@ export class MovieService {
 
     const params = this.params
 
-    return this.http.get<CreditResponse>(`${this.baseUrl}/movie/${id}/credits`,{params})
+    return this.http.get<CreditResponse>(`${this.baseUrl}/movie/${id}/credits`,{params, headers: this.headers})
       .pipe(
         switchMap( (response: CreditResponse) => of(response.cast))
       )
