@@ -1,17 +1,18 @@
-<div class="w-52 h-auto p-4 m-2
-    rounded-lg
-    shadow-md
-    hover:shadow-lg
-    hover:scale-110
-    transition-transform
-    cursor-pointer
-    group"
-    [routerLink]="['/actor', cast.id]"
-  >
-  <img [src]="cast.profile_path | imagePatch" [alt]="cast.name" class="rounded-lg w-52 h-64 object-cover">
-  <div class="p-3 flex flex-col gap-5 ">
-    <span class="text-lg font-semibold text-balance">{{ cast.name }}</span>
-    <span class="text-lg text-balance">{{ cast.character }}</span>
-
+<div
+  class="w-36 md:w-52 p-4 m-2 rounded-lg shadow-md hover:shadow-lg hover:scale-110 transition-transform cursor-pointer group"
+  [routerLink]="['/actor', cast.id]"
+>
+  <img
+    [src]="cast.profile_path | imagePatch"
+    [alt]="cast.name"
+    class="rounded-lg w-36 md:w-52 h-44 md:h-64 object-cover"
+  />
+  <div class="p-3 pb-0 flex flex-col gap-2 md:gap-5 h-32">
+    <span class="text-md md:text-lg font-semibold text-ellipsis">
+      {{ cast.name }}
+    </span>
+    <span class="text-sm md:text-md text-ellipsis">
+      {{ cast.character }}
+    </span>
   </div>
 </div>
