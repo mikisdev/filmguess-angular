@@ -18,8 +18,6 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { CastingCardComponent } from './components/casting-card/casting-card.component';
 
-
-
 @NgModule({
   declarations: [
     CardComponent,
@@ -32,16 +30,9 @@ import { CastingCardComponent } from './components/casting-card/casting-card.com
     GridCardComponent,
     UpcomingPageComponent,
     TopRatedPageComponent,
-    CastingCardComponent,
-
+    CastingCardComponent
   ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-
-    MoviesRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, MoviesRoutingModule, SharedModule],
+  exports: [SearchComponent]
 })
-export class MoviesModule { }
+export class MoviesModule {}
