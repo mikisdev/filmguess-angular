@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { MoviesModule } from './movies/movies.module';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
