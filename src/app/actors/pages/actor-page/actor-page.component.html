@@ -1,78 +1,66 @@
-<div *ngIf="actorDetails" class="flex w-full mt-24 text-white">
-
+<div *ngIf="actorDetails" class="flex w-full mt-16 md:mt-24 text-white">
   <div class="hidden md:flex md:flex-col w-80">
-    <img [src]="actorDetails.profile_path | imagePatch" [alt]="actorDetails.name" class="rounded-lg object-cover">
+    <img [src]="actorDetails.profile_path | imagePatch" [alt]="actorDetails.name" class="rounded-lg object-cover" />
 
-    <h3 class="font-bold text-lg mt-8">Información personal</h3>
+    <h3 class="font-bold text-sm md:text-lg mt-8">Información personal</h3>
 
     <span class="text-base font-semibold mt-2">Lugar de nacimiento</span>
     <p class="text-base">{{ actorDetails.place_of_birth }}</p>
 
     <span class="text-base font-semibold mt-3">Fecha de nacimiento</span>
-    <p class="text-base">{{ actorDetails.birthday| date: 'MM/dd/yyyy' }}</p>
+    <p class="text-base">{{ actorDetails.birthday | date : 'MM/dd/yyyy' }}</p>
 
     <ng-template [ngIf]="actorDetails.deathday">
-      <span class="text-base font-semibold mt-3">Fecha de nacimiento</span>
-      <p class="text-base">{{ actorDetails.birthday| date: 'MM/dd/yyyy' }}</p>
+      <span class="text-base font-semibold mt-3">Fecha de fallecimiento</span>
+      <p class="text-base">{{ actorDetails.deathday | date : 'MM/dd/yyyy' }}</p>
     </ng-template>
 
     <span class="text-base font-semibold mt-3">Películas realizadas</span>
     <p class="text-base">{{ actormovies?.length }}</p>
-
   </div>
 
-  <div class="flex flex-col w-full ml-16 lg:mr-48">
+  <div class="flex flex-col w-full ml-5 mr-5">
     <h2 class="font-bold text-3xl">{{ actorDetails.name }}</h2>
 
-    <div class="flex w-full mt-8 gap-10 md:hidden">
-      <img [src]="actorDetails.profile_path | imagePatch" [alt]="actorDetails.name" class="rounded-lg w-44 object-cover">
+    <div class="flex w-full mt-8 gap-7 md:hidden">
+      <img
+        [src]="actorDetails.profile_path | imagePatch"
+        [alt]="actorDetails.name"
+        class="rounded-lg w-40 object-cover"
+      />
 
       <div>
-        <h3 class="font-bold text-lg mt-8">Información personal</h3>
+        <span class="text-sm font-bold">Lugar de nacimiento</span>
+        <p class="text-sm mb-2">{{ actorDetails.place_of_birth }}</p>
 
-        <span class="text-base font-semibold mt-2">Lugar de nacimiento</span>
-        <p class="text-base">{{ actorDetails.place_of_birth }}</p>
-
-        <span class="text-base font-semibold mt-3">Fecha de nacimiento</span>
-        <p class="text-base">{{ actorDetails.birthday| date: 'MM/dd/yyyy' }}</p>
+        <span class="text-sm font-bold">Fecha de nacimiento</span>
+        <p class="text-sm mb-2">{{ actorDetails.birthday | date : 'MM/dd/yyyy' }}</p>
 
         <ng-template [ngIf]="actorDetails.deathday">
-          <span class="text-base font-semibold mt-3">Fecha de nacimiento</span>
-          <p class="text-base">{{ actorDetails.birthday| date: 'MM/dd/yyyy' }}</p>
+          <span class="text-sm font-bold">Fecha de fallecimiento</span>
+          <p class="text-sm mb-2">{{ actorDetails.deathday | date : 'MM/dd/yyyy' }}</p>
         </ng-template>
-      </div>
 
+        <span class="text-sm font-bold">Películas realizadas</span>
+        <p class="text-sm mb-2">{{ actormovies?.length }}</p>
+      </div>
     </div>
 
     <ng-template [ngIf]="actorDetails.biography.length > 0">
-      <span class="text-xl font-semibold mt-10">Biografía</span>
+      <span class="text-xl md:text-2xl font-semibold mt-10 mb-3">Biografía</span>
       <div *ngFor="let paragraph of biographyParagraphs">
-        <p>{{ paragraph }}</p>
-        <br>
+        <p class="text-sm md:text-base">{{ paragraph }}</p>
+        <br />
       </div>
     </ng-template>
 
     <span class="text-xl font-semibold mt-10">Películas</span>
-    <div class="
-    grid
-    grid-cols-2
-    sm:grid-cols-4
-    md:grid-cols-3
-    lg:grid-cols-3
-    xl:grid-cols-5
-    2xl:grid-cols-6
-    justify-items-center
-    pt-4"
+    <div
+      class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 justify-items-center pt-4"
     >
-
-  <div *ngFor="let actorMovie of actormovies" class="text-white">
-
-    <actor-movies-card [actorMovie]="actorMovie"></actor-movies-card>
-
+      <div *ngFor="let actorMovie of actormovies" class="text-white">
+        <actor-movies-card [actorMovie]="actorMovie"></actor-movies-card>
+      </div>
+    </div>
   </div>
-
-</div>
-
-  </div>
-
 </div>
