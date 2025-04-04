@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 function getNgValueAccessorFor(component: any) {
@@ -21,6 +21,8 @@ export class AuthInputComponent implements ControlValueAccessor {
   @Input('type') public type: string = '';
   @Input() disabled: boolean = false;
 
+  @Output('is-focused') isFocusedEvent = new EventEmitter<boolean>();
+
   password: boolean = false;
   value: any;
 
@@ -37,5 +39,11 @@ export class AuthInputComponent implements ControlValueAccessor {
   }
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+  }
+  public notifyOnFocus() {
+    this.isFocusedEvent.emit(true);
+  }
+  public notifyOnBlur() {
+    this.isFocusedEvent.emit(false);
   }
 }
