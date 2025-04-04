@@ -25,13 +25,16 @@ export class AuthInputComponent implements ControlValueAccessor {
   value: any;
 
   notifyChange = (value: number) => {};
+  notifyTouched = () => {};
   writeValue(obj: any): void {
     this.value = obj;
   }
   registerOnChange(notifyChange: (value: number) => {}) {
     this.notifyChange = notifyChange;
   }
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(notifyTouched: () => void) {
+    this.notifyTouched = notifyTouched;
+  }
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
