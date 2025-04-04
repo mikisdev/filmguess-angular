@@ -1,1 +1,17 @@
-<p>login-page works!</p>
+<div [formGroup]="loginForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
+  <h2 class="text-lg font-bold">Inicio de sesión</h2>
+
+  <auth-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
+  <span *ngIf="isValidField('email')" class="text-sm text-red-500 self-start flex items-center gap-1">
+    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error del email
+  </span>
+  <auth-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'" />
+  <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
+    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error de la contraseña
+  </span>
+  <button (click)="onLogin()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+    Iniciar sesión
+  </button>
+  <a [routerLink]="'../sign-up'" class="text-sm text-white underline decoration-1">¿Aún no tienes una cuenta?</a>
+  <a href="#" class="text-sm text-white underline decoration-1">¿Has olvidado tu contraseña?</a>
+</div>

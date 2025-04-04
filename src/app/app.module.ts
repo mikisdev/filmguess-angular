@@ -9,22 +9,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginPageComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-
-    MoviesModule
-  ],
-  providers: [
-    provideClientHydration(),
-    provideAnimationsAsync(),
-    provideHttpClient()
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, MoviesModule],
+  providers: [provideClientHydration(), provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
