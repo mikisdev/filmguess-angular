@@ -1,4 +1,9 @@
-<div class="flex flex-col items-center mt-16 gap-5">
-  <auth-input [placeholder]="'Correo Electrónico'" />
-  <auth-input [placeholder]="'Contraseña'" />
+<div [formGroup]="loginForm" class="flex flex-col items-center mt-16 gap-5">
+  <h2 class="text-lg font-bold">Inicio de sesión</h2>
+
+  <auth-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
+  <auth-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'" />
+  <button (click)="onLogin()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+    Iniciar sesión
+  </button>
 </div>
