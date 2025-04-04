@@ -8,7 +8,7 @@ import { ValidationsService } from '../../services/validations.service';
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
 
   constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
     this.loginForm = this.fb.group({
