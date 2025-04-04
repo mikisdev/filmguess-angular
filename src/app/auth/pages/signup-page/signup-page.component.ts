@@ -9,10 +9,7 @@ import { ValidationsService } from '../../services/validations.service';
 })
 export class SignupPageComponent {
   public signupForm: FormGroup;
-  public isUserNameFocused: boolean = false;
-  public isEmailFocused: boolean = false;
   public isPasswordFocused: boolean = false;
-  public isConfirmFocused: boolean = false;
 
   constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
     this.signupForm = this.fb.group({
