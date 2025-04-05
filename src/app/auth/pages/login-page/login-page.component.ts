@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'login-page',
@@ -9,8 +10,14 @@ import { ValidationsService } from '../../services/validations.service';
 })
 export class LoginPageComponent {
   public loginForm: FormGroup;
+  public errorMessage: string = '';
+  public isLoginFailed: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly validationsService: ValidationsService,
+    private readonly authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -22,12 +29,23 @@ export class LoginPageComponent {
   }
 
   public onLogin(): void {
-    if (this.loginForm.valid) {
-      console.log('Correo Electrónico:', this.loginForm.value.email);
-      console.log('Contraseña:', this.loginForm.value.password);
-    } else {
-      console.log('login no válido');
-    }
+    this.formValid();
     this.loginForm.markAllAsTouched();
+  }
+
+  private formValid(): void {
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+        next: (userCredential) => {
+          console.log('Sesión iniciada:', userCredential.user);
+          // redirigir al dashboard, etc.
+        },
+        error: (error) => {
+          this.isLoginFailed = true;
+          console.error('Error al iniciar sesión:', error.message);
+          this.errorMessage = error.message; // mostrarlo en el template
+        }
+      });
+    }
   }
 }

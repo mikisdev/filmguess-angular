@@ -34,24 +34,24 @@ export class SignupPageComponent {
   }
 
   public onSignup(): void {
-    if (this.signupForm.valid) {
-      this.registerOK();
-    }
+    this.formValid();
 
     this.signupForm.markAllAsTouched();
   }
 
-  private registerOK(): void {
-    this.authService.register(this.signupForm.value.email, this.signupForm.value.password).subscribe({
-      next: (userCredential) => {
-        console.log('Usuario registrado:', userCredential.user);
-        this.router.navigate(['../auth']);
-      },
-      error: (error) => {
-        this.isSignupFailed = true;
-        this.errorMessage = error.message;
-        console.error('Error al registrar:', error.message);
-      }
-    });
+  private formValid(): void {
+    if (this.signupForm.valid) {
+      this.authService.register(this.signupForm.value.email, this.signupForm.value.password).subscribe({
+        next: (userCredential) => {
+          console.log('Usuario registrado:', userCredential.user);
+          this.router.navigate(['../auth']);
+        },
+        error: (error) => {
+          this.isSignupFailed = true;
+          this.errorMessage = error.message;
+          console.error('Error al registrar:', error.message);
+        }
+      });
+    }
   }
 }
