@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'signup-page',
@@ -10,8 +12,15 @@ import { ValidationsService } from '../../services/validations.service';
 export class SignupPageComponent {
   public signupForm: FormGroup;
   public isPasswordFocused: boolean = false;
+  public isSignupFailed: boolean = false;
+  public errorMessage: string = '';
 
-  constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly validationsService: ValidationsService,
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {
     this.signupForm = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
@@ -26,13 +35,23 @@ export class SignupPageComponent {
 
   public onSignup(): void {
     if (this.signupForm.valid) {
-      console.log('usuario:', this.signupForm.value.userName);
-      console.log('Correo Electrónico:', this.signupForm.value.email);
-      console.log('Contraseña:', this.signupForm.value.password);
-      console.log('Confirmacion Contraseña:', this.signupForm.value.confirmPassword);
-    } else {
-      console.log('registro no válido');
+      this.registerOK();
     }
+
     this.signupForm.markAllAsTouched();
+  }
+
+  private registerOK(): void {
+    this.authService.register(this.signupForm.value.email, this.signupForm.value.password).subscribe({
+      next: (userCredential) => {
+        console.log('Usuario registrado:', userCredential.user);
+        this.router.navigate(['../auth']);
+      },
+      error: (error) => {
+        this.isSignupFailed = true;
+        this.errorMessage = error.message;
+        console.error('Error al registrar:', error.message);
+      }
+    });
   }
 }
