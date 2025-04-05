@@ -21,12 +21,17 @@ export class SignupPageComponent {
     private readonly authService: AuthService,
     private readonly router: Router
   ) {
-    this.signupForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(6)]],
-      email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+    this.signupForm = this.fb.group(
+      {
+        userName: ['', [Validators.required, Validators.minLength(6)]],
+        email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validators: [this.validationsService.isFieldOneEqualFieldTwo('password', 'confirmPassword')]
+      }
+    );
   }
 
   public isValidField(field: string): boolean | null {
