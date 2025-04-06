@@ -17,6 +17,7 @@ import { HomePageComponent } from './pages/list-page/home-page.component';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { CastingCardComponent } from './components/casting-card/casting-card.component';
+import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CastingCardComponent } from './components/casting-card/casting-card.com
     GridCardComponent,
     UpcomingPageComponent,
     TopRatedPageComponent,
-    CastingCardComponent
+    CastingCardComponent,
+    CollectionsPageComponent
   ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, MoviesRoutingModule, SharedModule],
   exports: [SearchComponent]

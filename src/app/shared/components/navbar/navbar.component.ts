@@ -2,14 +2,20 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 
+interface NavbarItem {
+  label: string;
+  icon: string;
+  url: string;
+}
+
 @Component({
   selector: 'shared-navbar',
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
-  public navbarItems = [
+  public navbarItems: NavbarItem[] = [
     { label: 'Home', icon: 'movie', url: '../movies' },
-    { label: 'Películas favoritas', icon: 'star', url: './' },
+    { label: 'Colecciones', icon: 'star', url: '../movies/collections' },
     { label: 'Adivinar la película', icon: 'videogame_asset', url: '../game' }
   ];
 

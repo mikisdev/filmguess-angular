@@ -7,6 +7,7 @@ import { NowPlayingPageComponent } from './pages/now-playing-page/now-playing-pa
 import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.component';
 import { TopRatedPageComponent } from './pages/top-rated-page/top-rated-page.component';
 import { HomePageComponent } from './pages/list-page/home-page.component';
+import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'top-rated',
         component: TopRatedPageComponent
+      },
+      {
+        path: 'collections',
+        component: CollectionsPageComponent
       },
       {
         path: ':id',
