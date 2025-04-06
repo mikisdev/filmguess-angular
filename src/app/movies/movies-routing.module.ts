@@ -6,7 +6,7 @@ import { MoviePageComponent } from './pages/movie-page/movie-page.component';
 import { NowPlayingPageComponent } from './pages/now-playing-page/now-playing-page.component';
 import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.component';
 import { TopRatedPageComponent } from './pages/top-rated-page/top-rated-page.component';
-import { HomePageComponent } from './pages/list-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
 
 const routes: Routes = [

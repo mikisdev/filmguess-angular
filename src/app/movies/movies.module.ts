@@ -12,7 +12,7 @@ import { SearchComponent } from './components/search/search.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { TopRatedPageComponent } from './pages/top-rated-page/top-rated-page.component';
 import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.component';
-import { HomePageComponent } from './pages/list-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
