@@ -9,6 +9,10 @@
   <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>Mensaje de error de la contraseña
   </span>
+
+  <span *ngIf="isLoginFailed" class="text-base text-red-500 flex items-start gap-1">
+    <mat-icon class="text-base">cancel</mat-icon>{{errorMessage}}
+  </span>
   <button (click)="onLogin()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
     Iniciar sesión
   </button>

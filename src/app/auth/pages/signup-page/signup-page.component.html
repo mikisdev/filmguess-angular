@@ -3,28 +3,28 @@
 
   <auth-input formControlName="userName" [placeholder]="'Nombre de Usuario'" [type]="'text'" />
   <span *ngIf="isValidField('userName')" class="text-sm text-red-500 self-start flex items-center gap-1">
-    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error del nombre de usuario
+    <mat-icon class="text-sm">warning</mat-icon>El nombre de usuario no es válido
   </span>
   <auth-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
   <span *ngIf="isValidField('email')" class="text-sm text-red-500 self-start flex items-center gap-1">
-    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error del email
+    <mat-icon class="text-sm">warning</mat-icon>El correo electrónico no es válido
   </span>
-  <auth-input
-    formControlName="password"
-    [placeholder]="'Contraseña'"
-    [type]="'password'"
-    (is-focused)="isPasswordFocused = $event"
-  />
-  <span *ngIf="isPasswordFocused" class="text-sm self-start flex items-start gap-1">
+  <auth-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'"
+    (is-focused)="isPasswordFocused = $event" />
+  <span class="text-sm self-start flex items-start gap-1">
     <mat-icon class="text-sm">report</mat-icon>La contraseña debe tener más de 6 caractéres, y al menos una letra y
     símbolo
   </span>
   <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
-    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error de la contraseña
+    <mat-icon class="text-sm">warning</mat-icon>La contraseña no es segura
   </span>
   <auth-input formControlName="confirmPassword" [placeholder]="'Confirma la contraseña'" [type]="'password'" />
   <span *ngIf="isValidField('confirmPassword')" class="text-sm text-red-500 self-start flex items-start gap-1">
-    <mat-icon class="text-sm">warning</mat-icon>Mensaje de error de la confirmacion de contraseña
+    <mat-icon class="text-sm">warning</mat-icon>Las contraseñas no coinciden
+  </span>
+
+  <span *ngIf="isSignupFailed" class="text-base text-red-500 flex items-start gap-1">
+    <mat-icon class="text-base">cancel</mat-icon>{{errorMessage}}
   </span>
   <button (click)="onSignup()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
     Registrarse

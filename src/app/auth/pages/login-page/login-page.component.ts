@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-page',
@@ -9,8 +11,15 @@ import { ValidationsService } from '../../services/validations.service';
 })
 export class LoginPageComponent {
   public loginForm: FormGroup;
+  public errorMessage: string = '';
+  public isLoginFailed: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly validationsService: ValidationsService,
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -22,12 +31,31 @@ export class LoginPageComponent {
   }
 
   public onLogin(): void {
-    if (this.loginForm.valid) {
-      console.log('Correo Electrónico:', this.loginForm.value.email);
-      console.log('Contraseña:', this.loginForm.value.password);
-    } else {
-      console.log('login no válido');
-    }
+    this.formValid();
     this.loginForm.markAllAsTouched();
+  }
+
+  private formValid(): void {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.loginUser(email, password);
+    }
+  }
+
+  private loginUser(email: string, password: string): void {
+    this.authService.login(email, password).subscribe({
+      next: () => this.handleLoginSuccess(),
+      error: (error) => this.handleLoginError(error)
+    });
+  }
+
+  private handleLoginSuccess(): void {
+    this.router.navigate(['../movies']);
+  }
+
+  private handleLoginError(error: any): void {
+    this.isLoginFailed = true;
+    console.error('Error al iniciar sesión:', error.message);
+    this.errorMessage = error.message;
   }
 }

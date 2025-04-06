@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { UserModel } from '../../interfaces/user.model';
+import { error } from 'console';
 
 @Component({
   selector: 'signup-page',
@@ -10,14 +14,26 @@ import { ValidationsService } from '../../services/validations.service';
 export class SignupPageComponent {
   public signupForm: FormGroup;
   public isPasswordFocused: boolean = false;
+  public isSignupFailed: boolean = false;
+  public errorMessage: string = '';
 
-  constructor(private readonly fb: FormBuilder, private readonly validationsService: ValidationsService) {
-    this.signupForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(6)]],
-      email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly validationsService: ValidationsService,
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {
+    this.signupForm = this.fb.group(
+      {
+        userName: ['', [Validators.required, Validators.minLength(6)]],
+        email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validators: [this.validationsService.isFieldOneEqualFieldTwo('password', 'confirmPassword')]
+      }
+    );
   }
 
   public isValidField(field: string): boolean | null {
@@ -25,14 +41,38 @@ export class SignupPageComponent {
   }
 
   public onSignup(): void {
-    if (this.signupForm.valid) {
-      console.log('usuario:', this.signupForm.value.userName);
-      console.log('Correo Electrónico:', this.signupForm.value.email);
-      console.log('Contraseña:', this.signupForm.value.password);
-      console.log('Confirmacion Contraseña:', this.signupForm.value.confirmPassword);
-    } else {
-      console.log('registro no válido');
-    }
+    this.formValid();
+
     this.signupForm.markAllAsTouched();
+  }
+
+  private formValid(): void {
+    if (this.signupForm.valid) {
+      const user: UserModel = {
+        userName: this.signupForm.value.userName,
+        email: this.signupForm.value.email,
+        password: this.signupForm.value.password,
+        profilePic: ''
+      };
+
+      this.registerUser(user);
+    }
+  }
+
+  private registerUser(user: UserModel): void {
+    this.authService.register(user).subscribe({
+      next: () => this.handleRegisterSuccess(),
+      error: (error) => this.handleRegisterError(error)
+    });
+  }
+
+  private handleRegisterSuccess(): void {
+    this.router.navigate(['../auth']);
+  }
+
+  private handleRegisterError(error: any): void {
+    this.isSignupFailed = true;
+    this.errorMessage = error.message;
+    console.error('Error al registrar:', error.message);
   }
 }
