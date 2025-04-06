@@ -2,10 +2,10 @@
   <a class="
   text-white text-2xl
     cursor-pointer
-  md:hover:text-violet-700" [routerLink]="route">{{ listName }}</a>
+  md:hover:text-violet-700" [routerLink]="moviesList?.url">{{ moviesList?.listName }}</a>
   <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
 
-    <div *ngFor="let movie of movies" class="text-white">
+    <div *ngFor="let movie of moviesList?.movies" class="text-white">
 
       <movies-card [movie]="movie"></movies-card>
 
