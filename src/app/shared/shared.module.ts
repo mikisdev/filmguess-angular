@@ -7,23 +7,11 @@ import { ImagePatchPipe } from './pipes/image-patch.pipe';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { MaterialModule } from '../material/material.module';
-
+import { CustomPopupComponent } from './components/custom-popup/custom-popup.component';
 
 @NgModule({
-  declarations: [
-    Error404PageComponent,
-    ImagePatchPipe,
-    NavbarComponent,
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule
-  ],
-  exports:[
-    ImagePatchPipe,
-    NavbarComponent
-
-  ]
+  declarations: [Error404PageComponent, ImagePatchPipe, NavbarComponent, CustomPopupComponent],
+  imports: [CommonModule, MaterialModule, RouterModule],
+  exports: [ImagePatchPipe, NavbarComponent, CustomPopupComponent]
 })
-export class SharedModule { }
+export class SharedModule {}

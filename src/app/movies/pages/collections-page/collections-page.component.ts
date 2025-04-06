@@ -42,4 +42,10 @@ export class CollectionsPageComponent {
       }
     });
   }
+
+  showPopup = false;
+
+  openPopup() {
+    this.showPopup = true;
+  }
 }

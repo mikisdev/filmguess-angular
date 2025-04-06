@@ -16,3 +16,12 @@
 <ng-template [ngIf]="moviesList.length !== 0">
   <movies-list *ngFor="let item of moviesList" [movies-list]="item"></movies-list>
 </ng-template>
+
+<button (click)="openPopup()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+  abrir poup
+</button>
+
+<custom-popup [(isVisible)]="showPopup">
+  <h2 class="text-xl font-bold mb-2">¡Hola!</h2>
+  <p class="text-gray-700">Este es un popup hecho con Tailwind.</p>
+</custom-popup>

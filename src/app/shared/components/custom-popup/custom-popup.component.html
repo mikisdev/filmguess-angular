@@ -1,0 +1,11 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4" *ngIf="isVisible">
+  <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md sm:max-w-lg md:max-w-xl relative">
+    <!-- Botón de cerrar -->
+    <button class="absolute top-3 right-3 text-gray-500 hover:text-black" (click)="close()">
+      ✕
+    </button>
+
+    <!-- Contenido del popup -->
+    <ng-content></ng-content>
+  </div>
+</div>
