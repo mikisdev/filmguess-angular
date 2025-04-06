@@ -1,1 +1,4 @@
-<p>custom-input works!</p>
+<input type="{{ type }}" placeholder="{{ placeholder }}"
+  class="w-80 md:w-96 h-10 px-6 bg-[#202020] text-white rounded-3xl my-input" [(ngModel)]="value"
+  (ngModelChange)="notifyChange(value)" (focusout)="notifyTouched()" (focus)="notifyOnFocus()"
+  (blur)="notifyOnBlur()" />

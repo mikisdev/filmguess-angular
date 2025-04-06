@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Error404PageComponent } from './pages/error404-page/error404-page.component';
 import { ImagePatchPipe } from './pipes/image-patch.pipe';
@@ -12,7 +13,7 @@ import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [Error404PageComponent, ImagePatchPipe, NavbarComponent, CustomPopupComponent, CustomInputComponent],
-  imports: [CommonModule, MaterialModule, RouterModule],
+  imports: [CommonModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   exports: [ImagePatchPipe, NavbarComponent, CustomPopupComponent, CustomInputComponent]
 })
 export class SharedModule {}

@@ -1,11 +1,11 @@
 <div [formGroup]="loginForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
   <h2 class="text-lg font-bold">Inicio de sesión</h2>
 
-  <auth-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
+  <custom-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
   <span *ngIf="isValidField('email')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>Mensaje de error del email
   </span>
-  <auth-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'" />
+  <custom-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'" />
   <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>Mensaje de error de la contraseña
   </span>

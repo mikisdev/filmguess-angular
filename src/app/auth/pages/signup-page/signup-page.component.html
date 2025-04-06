@@ -1,15 +1,15 @@
 <div [formGroup]="signupForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
   <h2 class="text-lg font-bold">Crear cuenta</h2>
 
-  <auth-input formControlName="userName" [placeholder]="'Nombre de Usuario'" [type]="'text'" />
+  <custom-input formControlName="userName" [placeholder]="'Nombre de Usuario'" [type]="'text'" />
   <span *ngIf="isValidField('userName')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>El nombre de usuario no es válido
   </span>
-  <auth-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
+  <custom-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
   <span *ngIf="isValidField('email')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>El correo electrónico no es válido
   </span>
-  <auth-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'"
+  <custom-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'"
     (is-focused)="isPasswordFocused = $event" />
   <span class="text-sm self-start flex items-start gap-1">
     <mat-icon class="text-sm">report</mat-icon>La contraseña debe tener más de 6 caractéres, y al menos una letra y
@@ -18,7 +18,7 @@
   <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>La contraseña no es segura
   </span>
-  <auth-input formControlName="confirmPassword" [placeholder]="'Confirma la contraseña'" [type]="'password'" />
+  <custom-input formControlName="confirmPassword" [placeholder]="'Confirma la contraseña'" [type]="'password'" />
   <span *ngIf="isValidField('confirmPassword')" class="text-sm text-red-500 self-start flex items-start gap-1">
     <mat-icon class="text-sm">warning</mat-icon>Las contraseñas no coinciden
   </span>
