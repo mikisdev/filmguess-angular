@@ -1,6 +1,5 @@
 <nav
-  class="bg-[#202020] dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-[#202020] dark:border-gray-600 px-6"
->
+  class="bg-[#202020] dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-[#202020] dark:border-gray-600 px-6">
   <div class="container mx-auto p-2">
     <div class="items-center justify-between flex md:w-auto">
       <div class="flex items-center font-bold">
@@ -8,37 +7,28 @@
         <h1 class="text-white text-xl pl-6">FilmGuess</h1>
       </div>
       <ul
-        class="hidden md:flex p-4 md:p-0 mt-4 font-medium border border-[#202020] rounded-lg bg-[#202020] sm:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#202020]"
-      >
+        class="hidden md:flex p-4 md:p-0 mt-4 font-medium border border-[#202020] rounded-lg bg-[#202020] sm:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#202020]">
         <li *ngFor="let item of navbarItems">
-          <a
-            href="#"
-            class="text-white md:hover:text-violet-700 md:p-0 hover:scale-110 transition-transform"
-            [routerLink]="item.url"
-            >{{ item.label }}</a
-          >
+          <a href="#" class="text-white md:hover:text-violet-700 md:p-0 hover:scale-110 transition-transform"
+            [routerLink]="item.url">{{ item.label }}</a>
         </li>
       </ul>
 
       <div class="menu-container flex md:hidden">
         <button class="text-white hover:text-violet-700" (click)="toggleMenu()"><mat-icon>menu</mat-icon></button>
         <div class="menu text-white bg-[#383838] w-11 text-center absolute z-20 mt-6 rounded-sm" *ngIf="isMenuOpened">
-          <div
-            class="menu-item p-2 cursor-pointer hover:text-violet-700"
-            *ngFor="let item of navbarItems"
-            [routerLink]="item.url"
-          >
+          <div class="menu-item p-2 cursor-pointer hover:text-violet-700" *ngFor="let item of navbarItems"
+            [routerLink]="item.url">
             <mat-icon>{{ item.icon }}</mat-icon>
           </div>
           <div class="menu-item p-2 cursor-pointer hover:text-violet-700 border-t-2 border-[#454444]">
-            <mat-icon [routerLink]="'../auth'">logout</mat-icon>
+            <mat-icon (click)="logOut()">logout</mat-icon>
           </div>
         </div>
       </div>
 
-      <a class="text-white hidden md:flex hover:text-violet-700 text-sm hover:scale-110 transition-transform"
-        ><mat-icon [routerLink]="'../auth'">logout</mat-icon></a
-      >
+      <a class="text-white hidden md:flex hover:text-violet-700 text-sm hover:scale-110 transition-transform"><mat-icon
+          (click)="logOut()">logout</mat-icon></a>
     </div>
   </div>
 </nav>
