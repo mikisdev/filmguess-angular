@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -51,12 +52,21 @@ export class AuthService {
     return authState(this.auth);
   }
 
-  resetPassword(email: string) {
+  public resetPassword(email: string) {
     return from(sendPasswordResetEmail(this.auth, email)).pipe(
       catchError((error) => {
         return throwError(() => new Error('Error al enviar el correo de recuperación.'));
       })
     );
+  }
+
+  public isAuthenticated(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      const unsubscribe = onAuthStateChanged(this.auth, (user) => {
+        observer.next(!!user);
+      });
+      return unsubscribe;
+    });
   }
 
   private createFirebaseUser(email: string, password: string) {
