@@ -1,1 +1,15 @@
-<p>movies-list works!</p>
+<div class="mt-16 shadow-2xl">
+  <a class="
+  text-white text-2xl
+    cursor-pointer
+  md:hover:text-violet-700" [routerLink]="route">{{ listName }}</a>
+  <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
+
+    <div *ngFor="let movie of movies" class="text-white">
+
+      <movies-card [movie]="movie"></movies-card>
+
+    </div>
+
+  </div>
+</div>
