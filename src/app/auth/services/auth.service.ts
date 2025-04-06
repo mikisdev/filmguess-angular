@@ -79,8 +79,7 @@ export class AuthService {
       userName: user.userName,
       email: user.email,
       photoURL: user.profilePic,
-      favorites: [],
-      viewed: []
+      collections: []
     };
     return from(setDoc(userRef, userData));
   }
