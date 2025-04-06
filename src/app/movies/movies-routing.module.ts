@@ -8,6 +8,7 @@ import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.compo
 import { TopRatedPageComponent } from './pages/top-rated-page/top-rated-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
       },
       {
         path: 'collections',
-        component: CollectionsPageComponent
+        component: CollectionsPageComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: ':id',
