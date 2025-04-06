@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
-import { ListPageComponent } from './pages/list-page/list-page.component';
 import { MoviePageComponent } from './pages/movie-page/movie-page.component';
 import { NowPlayingPageComponent } from './pages/now-playing-page/now-playing-page.component';
 import { UpcomingPageComponent } from './pages/upcoming-page/upcoming-page.component';
 import { TopRatedPageComponent } from './pages/top-rated-page/top-rated-page.component';
-
+import { HomePageComponent } from './pages/list-page/home-page.component';
 
 const routes: Routes = [
   {
@@ -16,7 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: ListPageComponent
+        component: HomePageComponent
       },
       {
         path: 'now-playing',
@@ -40,11 +39,10 @@ const routes: Routes = [
       }
     ]
   }
-]
-
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MoviesRoutingModule { }
+export class MoviesRoutingModule {}
