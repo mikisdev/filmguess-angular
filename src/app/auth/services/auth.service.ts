@@ -12,17 +12,35 @@ import {
   User
 } from '@angular/fire/auth';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { UserModel } from '../interfaces/user.model';
 import { HandleAuthErrorsService } from './handle-auth-errors.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private uidSubject = new BehaviorSubject<string | null>(null);
+
   constructor(
     private readonly firestore: Firestore,
     private readonly auth: Auth,
     private readonly handleAuthErrors: HandleAuthErrorsService
-  ) {}
+  ) {
+    onAuthStateChanged(this.auth, (user: User | null) => {
+      if (user) {
+        this.uidSubject.next(user.uid);
+      } else {
+        this.uidSubject.next(null);
+      }
+    });
+  }
+
+  public getUid(): Observable<string | null> {
+    return this.uidSubject.asObservable();
+  }
+
+  public getCurrentUid(): string | null {
+    return this.uidSubject.value;
+  }
 
   public register(user: UserModel) {
     return from(this.createFirebaseUser(user.email, user.password)).pipe(

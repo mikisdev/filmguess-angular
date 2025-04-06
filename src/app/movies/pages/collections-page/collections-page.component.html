@@ -2,6 +2,17 @@
   <h2 class="mt-16 text-white text-lg">Aún no tienes ninguna lista</h2>
 </ng-template>
 
+<button (click)="createCollection()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+  Crear colección
+</button>
+<button (click)="addMovieToCollection()"
+  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+  Agregar pelicula
+</button>
+<button (click)="getCollections()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+  mostrar colecciones
+</button>
+
 <ng-template [ngIf]="moviesList.length !== 0">
   <movies-list *ngFor="let item of moviesList" [movies-list]="item"></movies-list>
 </ng-template>
