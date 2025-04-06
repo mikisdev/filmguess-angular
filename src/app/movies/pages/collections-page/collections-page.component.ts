@@ -11,22 +11,22 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class CollectionsPageComponent {
   public moviesList: MoviesList[] = [];
+  public showPopup: boolean = false;
 
   constructor(
-    private readonly movieService: MovieService,
     private readonly movieCollectionService: MovieCollectionService,
     private readonly authService: AuthService
   ) {
-    this.moviesList = movieCollectionService.getMoviesList();
+    // this.moviesList = movieCollectionService.getMoviesList();
   }
 
-  public createCollection(): void {
-    this.authService.getUid().subscribe((uid) => {
-      if (uid) {
-        this.movieCollectionService.addUserCollection(uid, 'Favoritas');
-      }
-    });
-  }
+  // public createCollection(): void {
+  //   this.authService.getUid().subscribe((uid) => {
+  //     if (uid) {
+  //       this.movieCollectionService.addUserCollection(uid, 'Favoritas');
+  //     }
+  //   });
+  // }
   public addMovieToCollection(): void {
     this.authService.getUid().subscribe((uid) => {
       if (uid) {
@@ -34,16 +34,14 @@ export class CollectionsPageComponent {
       }
     });
   }
-  public getCollections(): void {
-    this.authService.getUid().subscribe((uid) => {
-      if (uid) {
-        this.movieCollectionService.getUserCollections(uid);
-        this.movieCollectionService.getMoviesList();
-      }
-    });
-  }
-
-  showPopup = false;
+  // public getCollections(): void {
+  //   this.authService.getUid().subscribe((uid) => {
+  //     if (uid) {
+  //       this.movieCollectionService.getUserCollections(uid);
+  //       this.movieCollectionService.getMoviesList();
+  //     }
+  //   });
+  // }
 
   openPopup() {
     this.showPopup = true;

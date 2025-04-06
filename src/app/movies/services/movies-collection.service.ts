@@ -13,15 +13,20 @@ export class MovieCollectionService {
     private movieService: MovieService
   ) {}
 
-  public addUserCollection(uid: string, collectionName: string) {
-    const userRef = doc(this.firestore, `users/${uid}`);
-    const newCollection = {
-      name: collectionName,
-      movies: []
-    };
+  public addNewCollection(collectionName: string) {
+    this.authService.getUid().subscribe((uid) => {
+      if (uid) {
+        const userRef = doc(this.firestore, `users/${uid}`);
+        const newCollection = {
+          name: collectionName,
+          movies: []
+        };
 
-    return updateDoc(userRef, {
-      collections: arrayUnion(newCollection)
+        return updateDoc(userRef, {
+          collections: arrayUnion(newCollection)
+        });
+      }
+      return null;
     });
   }
 
@@ -103,7 +108,7 @@ export class MovieCollectionService {
     return moviesList;
   }
 
-  public async getUserCollections(uid: string): Promise<any[]> {
+  private async getUserCollections(uid: string): Promise<any[]> {
     const userRef = doc(this.firestore, `users/${uid}`);
     const userSnap = await getDoc(userRef);
 
