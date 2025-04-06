@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { UserModel } from '../../interfaces/user.model';
+import { error } from 'console';
 
 @Component({
   selector: 'signup-page',
@@ -46,17 +48,31 @@ export class SignupPageComponent {
 
   private formValid(): void {
     if (this.signupForm.valid) {
-      this.authService.register(this.signupForm.value.email, this.signupForm.value.password).subscribe({
-        next: (userCredential) => {
-          console.log('Usuario registrado:', userCredential.user);
-          this.router.navigate(['../auth']);
-        },
-        error: (error) => {
-          this.isSignupFailed = true;
-          this.errorMessage = error.message;
-          console.error('Error al registrar:', error.message);
-        }
-      });
+      const user: UserModel = {
+        userName: this.signupForm.value.userName,
+        email: this.signupForm.value.email,
+        password: this.signupForm.value.password,
+        profilePic: ''
+      };
+
+      this.registerUser(user);
     }
+  }
+
+  private registerUser(user: UserModel): void {
+    this.authService.register(user).subscribe({
+      next: () => this.handleRegisterSuccess(),
+      error: (error) => this.handleRegisterError(error)
+    });
+  }
+
+  private handleRegisterSuccess(): void {
+    this.router.navigate(['../auth']);
+  }
+
+  private handleRegisterError(error: any): void {
+    this.isSignupFailed = true;
+    this.errorMessage = error.message;
+    console.error('Error al registrar:', error.message);
   }
 }

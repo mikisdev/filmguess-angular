@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-page',
@@ -16,7 +17,8 @@ export class LoginPageComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly validationsService: ValidationsService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
@@ -35,17 +37,25 @@ export class LoginPageComponent {
 
   private formValid(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-        next: (userCredential) => {
-          console.log('Sesión iniciada:', userCredential.user);
-          // redirigir al dashboard, etc.
-        },
-        error: (error) => {
-          this.isLoginFailed = true;
-          console.error('Error al iniciar sesión:', error.message);
-          this.errorMessage = error.message; // mostrarlo en el template
-        }
-      });
+      const { email, password } = this.loginForm.value;
+      this.loginUser(email, password);
     }
+  }
+
+  private loginUser(email: string, password: string): void {
+    this.authService.login(email, password).subscribe({
+      next: () => this.handleLoginSuccess(),
+      error: (error) => this.handleLoginError(error)
+    });
+  }
+
+  private handleLoginSuccess(): void {
+    this.router.navigate(['../movies']);
+  }
+
+  private handleLoginError(error: any): void {
+    this.isLoginFailed = true;
+    console.error('Error al iniciar sesión:', error.message);
+    this.errorMessage = error.message;
   }
 }

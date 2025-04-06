@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   authState,
@@ -8,47 +8,38 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
   User
 } from '@angular/fire/auth';
-import { catchError, from, Observable, throwError } from 'rxjs';
+import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
+import { UserModel } from '../interfaces/user.model';
+import { HandleAuthErrorsService } from './handle-auth-errors.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly auth: Auth = inject(Auth);
+  constructor(
+    private readonly firestore: Firestore,
+    private readonly auth: Auth,
+    private readonly handleAuthErrors: HandleAuthErrorsService
+  ) {}
 
-  constructor() {}
-
-  public getAuth() {
-    return getAuth();
-  }
-
-  public register(email: string, password: string) {
-    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      catchError((error) => {
-        let errorMsg = this.getRegisterErrorMessage(error.code);
-        return throwError(() => new Error(errorMsg));
-      })
+  public register(user: UserModel) {
+    return from(this.createFirebaseUser(user.email, user.password)).pipe(
+      switchMap((userCredential) => this.saveUserData(userCredential.user.uid, user)),
+      catchError((error) => this.handleAuthErrors.handleRegisterError(error))
     );
   }
 
   public login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      catchError((error) => {
-        let errorMsg = this.getLoginErrorMessage(error.code);
-        console.log(error.code);
-        return throwError(() => new Error(errorMsg));
-      })
+      catchError((error) => this.handleAuthErrors.handleLoginError(error))
     );
   }
 
   public loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     return from(signInWithPopup(this.auth, provider)).pipe(
-      catchError((error) => {
-        const msg = this.getGoogleLoginErrorMessage(error.code);
-        return throwError(() => new Error(msg));
-      })
+      catchError((error) => this.handleAuthErrors.handleGoogleLoginError(error))
     );
   }
 
@@ -68,46 +59,19 @@ export class AuthService {
     );
   }
 
-  private getLoginErrorMessage(errorCode: string): string {
-    switch (errorCode) {
-      case 'auth/invalid-email':
-        return 'El correo ingresado no es válido.';
-      case 'auth/user-disabled':
-        return 'Este usuario ha sido deshabilitado.';
-      case 'auth/user-not-found':
-        return 'No se encontró una cuenta con este correo.';
-      case 'auth/wrong-password':
-        return 'La contraseña es incorrecta.';
-      case 'auth/invalid-credential':
-        return 'Usuario o contraseña incorrectos';
-      default:
-        return 'Ocurrió un error al iniciar sesión.';
-    }
+  private createFirebaseUser(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  private getRegisterErrorMessage(errorCode: string): string {
-    switch (errorCode) {
-      case 'auth/email-already-in-use':
-        return 'Este correo ya está en uso.';
-      case 'auth/invalid-email':
-        return 'El correo ingresado no es válido.';
-      case 'auth/weak-password':
-        return 'La contraseña es muy débil.';
-      default:
-        return 'Ocurrió un error al registrar el usuario.';
-    }
-  }
-
-  private getGoogleLoginErrorMessage(code: string): string {
-    switch (code) {
-      case 'auth/popup-closed-by-user':
-        return 'La ventana emergente se cerró antes de completar el inicio de sesión.';
-      case 'auth/popup-blocked':
-        return 'El navegador bloqueó la ventana emergente.';
-      case 'auth/cancelled-popup-request':
-        return 'Se canceló la ventana emergente anterior.';
-      default:
-        return 'Error al iniciar sesión con Google.';
-    }
+  private saveUserData(uid: string, user: UserModel) {
+    const userRef = doc(this.firestore, `users/${uid}`);
+    const userData = {
+      userName: user.userName,
+      email: user.email,
+      photoURL: user.profilePic,
+      favorites: [],
+      viewed: []
+    };
+    return from(setDoc(userRef, userData));
   }
 }
