@@ -1,0 +1,16 @@
+<custom-popup [isVisible]="isVisible" (isVisibleChange)="close($event)">
+  <div class="flex flex-col" [formGroup]="form">
+    <h2 class="text-xl font-bold mb-5">Crea una nueva lista</h2>
+    <custom-input formControlName="list" [placeholder]="'Nueva Lista'" [type]="'text'"></custom-input>
+
+    <!-- Aquí he añadido la clase flex y justify-end para mover el botón "Crear" hacia la derecha -->
+    <div class="flex justify-end">
+      <button
+        (click)="onCreate()"
+        class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 mt-5 rounded-3xl w-24"
+      >
+        Crear
+      </button>
+    </div>
+  </div>
+</custom-popup>

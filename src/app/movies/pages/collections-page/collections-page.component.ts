@@ -11,13 +11,13 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class CollectionsPageComponent {
   public moviesList: MoviesList[] = [];
-  public showPopup: boolean = false;
+  public showCreateList = false;
 
   constructor(
     private readonly movieCollectionService: MovieCollectionService,
     private readonly authService: AuthService
   ) {
-    // this.moviesList = movieCollectionService.getMoviesList();
+    // this.loadLists();
   }
 
   // public createCollection(): void {
@@ -44,6 +44,10 @@ export class CollectionsPageComponent {
   // }
 
   openPopup() {
-    this.showPopup = true;
+    this.showCreateList = true;
+  }
+
+  private async loadLists(): Promise<void> {
+    this.moviesList = await this.movieCollectionService.getMoviesList();
   }
 }

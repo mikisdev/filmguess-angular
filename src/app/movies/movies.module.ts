@@ -19,6 +19,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CastingCardComponent } from './components/casting-card/casting-card.component';
 import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
+import { PopupCreateListComponent } from './components/popup-create-list/popup-create-list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MoviesListComponent } from './components/movies-list/movies-list.compon
     TopRatedPageComponent,
     CastingCardComponent,
     CollectionsPageComponent,
-    MoviesListComponent
+    MoviesListComponent,
+    PopupCreateListComponent
   ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, MoviesRoutingModule, SharedModule],
   exports: [SearchComponent]

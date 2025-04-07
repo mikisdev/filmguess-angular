@@ -2,11 +2,14 @@
   <a class="text-white text-2xl cursor-pointer md:hover:text-violet-700" [routerLink]="moviesList?.url">
     {{ moviesList?.listName }}
   </a>
-  <ng-template [ngIf]="moviesList?.movies?.length !== 0" class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
-    <div *ngFor="let movie of moviesList?.movies" class="text-white">
-      <movies-card [movie]="movie"></movies-card>
+  <ng-template [ngIf]="moviesList?.movies?.length !== 0">
+    <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden">
+      <div *ngFor="let movie of moviesList?.movies" class="text-white">
+        <movies-card [movie]="movie"></movies-card>
+      </div>
     </div>
   </ng-template>
+
   <ng-template [ngIf]="moviesList?.movies?.length === 0">
     <h3 class="text-white text-center text-lg font-semibold text-balance">Esta lista está vacía</h3>
   </ng-template>

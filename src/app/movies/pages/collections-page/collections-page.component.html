@@ -2,9 +2,10 @@
   <h2 class="mt-16 text-white text-lg">Aún no tienes ninguna lista</h2>
 </ng-template>
 
-
-<button (click)="addMovieToCollection()"
-  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
+<button
+  (click)="addMovieToCollection()"
+  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl"
+>
   Agregar pelicula
 </button>
 <!-- <button (click)="getCollections()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
@@ -19,5 +20,4 @@
   Crear colección
 </button>
 
-<custom-popup [(isVisible)]="showPopup">
-</custom-popup>
+<popup-create-list [isVisible]="showCreateList" (isVisibleChange)="showCreateList = $event"> </popup-create-list>
