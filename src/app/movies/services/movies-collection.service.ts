@@ -4,6 +4,7 @@ import { MoviesList } from '../interfaces/movies-list.interface';
 import { AuthService } from '../../auth/services/auth.service';
 import { Movie } from '../../shared/interfaces/movie.interface';
 import { MovieService } from './movies.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MovieCollectionService {
@@ -81,30 +82,57 @@ export class MovieCollectionService {
     }
   }
 
-  public getMoviesList(): MoviesList[] {
-    let moviesList: MoviesList[] = [];
-    this.authService.getUid().subscribe(async (uid) => {
-      if (uid) {
-        const collections = await this.getUserCollections(uid);
+  // public getMoviesList(): MoviesList[] {
+  //   let moviesList: MoviesList[] = [];
+  //   this.authService.getUid().subscribe(async (uid) => {
+  //     if (uid) {
+  //       const collections = await this.getUserCollections(uid);
 
-        collections.forEach((collection) => {
-          const movies: Movie[] = [];
-          const moviesID: string[] = collection?.['movies'];
-          console.log(collection);
-          moviesID.forEach((movie) => {
-            this.movieService.getMovieById(movie).subscribe((movie: Movie) => {
-              movies.push(movie);
-            });
-          });
-          moviesList.push({
-            movies: movies,
-            url: (collection?.['name'] as string).toLowerCase(),
-            listName: collection?.['name']
-          });
-        });
-        console.log({ moviesList });
+  //       collections.forEach((collection) => {
+  //         const movies: Movie[] = [];
+  //         const moviesID: string[] = collection?.['movies'];
+  //         console.log(collection);
+  //         moviesID.forEach((movie) => {
+  //           this.movieService.getMovieById(movie).subscribe((movie: Movie) => {
+  //             movies.push(movie);
+  //           });
+  //         });
+  //         moviesList.push({
+  //           movies: movies,
+  //           url: (collection?.['name'] as string).toLowerCase(),
+  //           listName: collection?.['name']
+  //         });
+  //       });
+  //       console.log({ moviesList });
+  //     }
+  //   });
+  //   return moviesList;
+  // }
+
+  public async getMoviesList(): Promise<MoviesList[]> {
+    const moviesList: MoviesList[] = [];
+
+    const uid = await firstValueFrom(this.authService.getUid());
+    if (!uid) return [];
+
+    const collections = await this.getUserCollections(uid);
+
+    for (const collection of collections) {
+      const movieIds: string[] = collection?.['movies'] || [];
+      const movies: Movie[] = [];
+
+      for (const id of movieIds) {
+        const movie = await firstValueFrom(this.movieService.getMovieById(id));
+        movies.push(movie);
       }
-    });
+
+      moviesList.push({
+        movies,
+        url: (collection?.['name'] as string).toLowerCase(),
+        listName: collection?.['name']
+      });
+    }
+
     return moviesList;
   }
 
