@@ -8,9 +8,10 @@ import { MovieCollectionService } from '../../services/movies-collection.service
 })
 export class PopupAddMovieComponent {
   public selectedList: string | null = null;
-  @Input() isVisible = false;
-  @Input() lists: string[] = [];
-  @Output() isVisibleChange = new EventEmitter<boolean>();
+  @Input('is-visible') isVisible = false;
+  @Input('list') lists: string[] = [];
+  @Input('movie-id') movieID: number | undefined;
+  @Output('is-visible-change') isVisibleChange = new EventEmitter<boolean>();
 
   constructor(private readonly movieCollectionService: MovieCollectionService) {}
 
@@ -19,10 +20,12 @@ export class PopupAddMovieComponent {
     this.isVisibleChange.emit(value);
   }
 
-  public onCreate(collection: string | null) {
-    if (collection) {
-      this.movieCollectionService.addMovieToCollection(collection, '950387');
-      this.close(false);
+  public onAdd(collection?: string) {
+    if (this.movieID) {
+      if (collection) {
+        this.movieCollectionService.addMovieToCollection(collection, this.movieID);
+        this.close(false);
+      }
     }
   }
 }

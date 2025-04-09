@@ -31,7 +31,7 @@ export class MovieCollectionService {
     });
   }
 
-  public async addMovieToCollection(collectionName: string, movieId: string) {
+  public async addMovieToCollection(collectionName: string, movieId: number) {
     this.authService.getUid().subscribe(async (uid) => {
       if (uid) {
         const userRef = doc(this.firestore, `users/${uid}`);

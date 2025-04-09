@@ -15,35 +15,13 @@ export class CollectionsPageComponent {
   public showCreateList = false;
   public showAddMovie = false;
 
-  constructor(
-    private readonly movieCollectionService: MovieCollectionService,
-    private readonly authService: AuthService
-  ) {
+  constructor(private readonly movieCollectionService: MovieCollectionService) {
     this.loadLists();
     this.loadCollections();
-    console.log('AAA' + this.collections);
   }
 
-  // public createCollection(): void {
-  //   this.authService.getUid().subscribe((uid) => {
-  //     if (uid) {
-  //       this.movieCollectionService.addUserCollection(uid, 'Favoritas');
-  //     }
-  //   });
-  // }
-  public addMovieToCollection(): void {
-    this.authService.getUid().subscribe((uid) => {
-      if (uid) {
-        this.movieCollectionService.addMovieToCollection('Favoritas', '950387');
-      }
-    });
-  }
-
-  openCreateListPopup() {
+  public openCreateListPopup() {
     this.showCreateList = true;
-  }
-  openAddMoviePopup() {
-    this.showAddMovie = true;
   }
 
   private async loadLists(): Promise<void> {

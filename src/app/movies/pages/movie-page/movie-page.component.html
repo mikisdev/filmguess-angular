@@ -40,9 +40,37 @@
     </section>
   </div>
 </div>
+<div class="flex gap-3 mt-3">
+  <button
+    class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl"
+    (click)="openCreateListPopup()"
+  >
+    Crear Lista
+  </button>
+  <button
+    class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl"
+    (click)="openAddMoviePopup()"
+  >
+    Añadir
+  </button>
+</div>
 
 <div class="flex flex-nowrap overflow-x-auto overflow-y-hidden mt-4">
   <div *ngFor="let cast of casts" class="text-white">
     <movie-casting-card [cast]="cast"></movie-casting-card>
   </div>
 </div>
+
+<popup-create-list
+  [is-visible]="showCreateList"
+  (is-visible-change)="showCreateList = $event"
+  (on-create)="loadCollections()"
+>
+</popup-create-list>
+<popup-add-movie
+  [is-visible]="showAddMovie"
+  [list]="collections"
+  [movie-id]="movie?.id"
+  (is-visible-change)="showAddMovie = $event"
+>
+</popup-add-movie>

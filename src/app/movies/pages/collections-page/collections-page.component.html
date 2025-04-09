@@ -3,22 +3,15 @@
 </ng-template>
 
 <button
-  (click)="openAddMoviePopup()"
-  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl"
+  (click)="openCreateListPopup()"
+  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl mt-10"
 >
-  Agregar pelicula
+  Crear colección
 </button>
 
 <ng-template [ngIf]="moviesList.length !== 0">
   <movies-list *ngFor="let item of moviesList" [movies-list]="item"></movies-list>
 </ng-template>
-
-<button
-  (click)="openCreateListPopup()"
-  class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl"
->
-  Crear colección
-</button>
 
 <popup-create-list
   [is-visible]="showCreateList"
@@ -26,5 +19,3 @@
   (on-create)="loadCollections()"
 >
 </popup-create-list>
-<popup-add-movie [isVisible]="showAddMovie" [lists]="collections" (isVisibleChange)="showAddMovie = $event">
-</popup-add-movie>
