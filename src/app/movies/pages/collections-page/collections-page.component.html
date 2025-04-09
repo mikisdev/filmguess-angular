@@ -20,6 +20,11 @@
   Crear colección
 </button>
 
-<popup-create-list [isVisible]="showCreateList" (isVisibleChange)="showCreateList = $event"> </popup-create-list>
+<popup-create-list
+  [is-visible]="showCreateList"
+  (is-visible-change)="showCreateList = $event"
+  (on-create)="loadCollections()"
+>
+</popup-create-list>
 <popup-add-movie [isVisible]="showAddMovie" [lists]="collections" (isVisibleChange)="showAddMovie = $event">
 </popup-add-movie>

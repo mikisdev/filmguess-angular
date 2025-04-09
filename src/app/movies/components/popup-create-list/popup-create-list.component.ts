@@ -10,12 +10,13 @@ import { MovieCollectionService } from '../../services/movies-collection.service
 export class PopupCreateListComponent {
   public form: FormGroup;
 
-  @Input() isVisible = false;
-  @Output() isVisibleChange = new EventEmitter<boolean>();
+  @Input('is-visible') isVisible = false;
+  @Output('is-visible-change') isVisibleChange = new EventEmitter<boolean>();
+  @Output('on-create') onCreateEmmit = new EventEmitter<void>();
 
   constructor(private readonly fb: FormBuilder, private readonly movieCollectionService: MovieCollectionService) {
     this.form = this.fb.group({
-      list: ['', [Validators.required, Validators.minLength(6)]]
+      list: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
@@ -24,6 +25,7 @@ export class PopupCreateListComponent {
       this.movieCollectionService.addNewCollection(this.form.value.list);
       this.isVisible = false;
       this.form.value.list = '';
+      this.onCreateEmmit.emit();
     }
   }
 

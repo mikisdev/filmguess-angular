@@ -49,7 +49,7 @@ export class CollectionsPageComponent {
   private async loadLists(): Promise<void> {
     this.moviesList = await this.movieCollectionService.getMoviesList();
   }
-  private async loadCollections(): Promise<void> {
+  public async loadCollections(): Promise<void> {
     this.movieCollectionService.getCollectionNamesFromCurrentUser().then((list: string[]) => {
       this.collections = list;
       console.log({ list });
