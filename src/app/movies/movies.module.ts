@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CardComponent } from './components/card/card.component';
 import { GridCardComponent } from './components/grid-card/grid-card.component';
@@ -20,6 +20,7 @@ import { CastingCardComponent } from './components/casting-card/casting-card.com
 import { CollectionsPageComponent } from './pages/collections-page/collections-page.component';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { PopupCreateListComponent } from './components/popup-create-list/popup-create-list.component';
+import { PopupAddMovieComponent } from './components/popup-add-movie/popup-add-movie.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +37,10 @@ import { PopupCreateListComponent } from './components/popup-create-list/popup-c
     CastingCardComponent,
     CollectionsPageComponent,
     MoviesListComponent,
-    PopupCreateListComponent
+    PopupCreateListComponent,
+    PopupAddMovieComponent
   ],
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule, MoviesRoutingModule, SharedModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, MoviesRoutingModule, SharedModule, FormsModule],
   exports: [SearchComponent]
 })
 export class MoviesModule {}

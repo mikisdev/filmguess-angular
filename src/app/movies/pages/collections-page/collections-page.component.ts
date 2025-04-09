@@ -11,13 +11,17 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class CollectionsPageComponent {
   public moviesList: MoviesList[] = [];
+  public collections: string[] = [];
   public showCreateList = false;
+  public showAddMovie = false;
 
   constructor(
     private readonly movieCollectionService: MovieCollectionService,
     private readonly authService: AuthService
   ) {
-    // this.loadLists();
+    this.loadLists();
+    this.loadCollections();
+    console.log('AAA' + this.collections);
   }
 
   // public createCollection(): void {
@@ -30,24 +34,25 @@ export class CollectionsPageComponent {
   public addMovieToCollection(): void {
     this.authService.getUid().subscribe((uid) => {
       if (uid) {
-        this.movieCollectionService.addMovieToCollection(uid, 'Favoritas', '950387');
+        this.movieCollectionService.addMovieToCollection('Favoritas', '950387');
       }
     });
   }
-  // public getCollections(): void {
-  //   this.authService.getUid().subscribe((uid) => {
-  //     if (uid) {
-  //       this.movieCollectionService.getUserCollections(uid);
-  //       this.movieCollectionService.getMoviesList();
-  //     }
-  //   });
-  // }
 
-  openPopup() {
+  openCreateListPopup() {
     this.showCreateList = true;
+  }
+  openAddMoviePopup() {
+    this.showAddMovie = true;
   }
 
   private async loadLists(): Promise<void> {
     this.moviesList = await this.movieCollectionService.getMoviesList();
+  }
+  private async loadCollections(): Promise<void> {
+    this.movieCollectionService.getCollectionNamesFromCurrentUser().then((list: string[]) => {
+      this.collections = list;
+      console.log({ list });
+    });
   }
 }

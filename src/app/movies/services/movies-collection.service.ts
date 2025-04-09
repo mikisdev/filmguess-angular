@@ -31,31 +31,35 @@ export class MovieCollectionService {
     });
   }
 
-  public async addMovieToCollection(uid: string, collectionName: string, movieId: string) {
-    const userRef = doc(this.firestore, `users/${uid}`);
-    const userSnap = await getDoc(userRef);
+  public async addMovieToCollection(collectionName: string, movieId: string) {
+    this.authService.getUid().subscribe(async (uid) => {
+      if (uid) {
+        const userRef = doc(this.firestore, `users/${uid}`);
+        const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      const userData = userSnap.data();
-      const collections = userData['collections'] || [];
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          const collections = userData['collections'] || [];
 
-      const updatedCollections = collections.map((col: any) => {
-        if (col.name === collectionName) {
-          // Evita duplicados
-          if (!col.movies.includes(movieId)) {
-            return {
-              ...col,
-              movies: [...col.movies, movieId]
-            };
-          }
+          const updatedCollections = collections.map((col: any) => {
+            if (col.name === collectionName) {
+              // Evita duplicados
+              if (!col.movies.includes(movieId)) {
+                return {
+                  ...col,
+                  movies: [...col.movies, movieId]
+                };
+              }
+            }
+            return col;
+          });
+
+          return updateDoc(userRef, { collections: updatedCollections });
+        } else {
+          throw new Error('Usuario no encontrado');
         }
-        return col;
-      });
-
-      return updateDoc(userRef, { collections: updatedCollections });
-    } else {
-      throw new Error('Usuario no encontrado');
-    }
+      }
+    });
   }
 
   public async removeMovieFromCollection(uid: string, collectionName: string, movieId: string) {
@@ -82,58 +86,78 @@ export class MovieCollectionService {
     }
   }
 
-  // public getMoviesList(): MoviesList[] {
-  //   let moviesList: MoviesList[] = [];
-  //   this.authService.getUid().subscribe(async (uid) => {
-  //     if (uid) {
-  //       const collections = await this.getUserCollections(uid);
+  public getMoviesList(): MoviesList[] {
+    let moviesList: MoviesList[] = [];
+    this.authService.getUid().subscribe(async (uid) => {
+      if (uid) {
+        const collections = await this.getUserCollections(uid);
 
-  //       collections.forEach((collection) => {
-  //         const movies: Movie[] = [];
-  //         const moviesID: string[] = collection?.['movies'];
-  //         console.log(collection);
-  //         moviesID.forEach((movie) => {
-  //           this.movieService.getMovieById(movie).subscribe((movie: Movie) => {
-  //             movies.push(movie);
-  //           });
-  //         });
-  //         moviesList.push({
-  //           movies: movies,
-  //           url: (collection?.['name'] as string).toLowerCase(),
-  //           listName: collection?.['name']
-  //         });
-  //       });
-  //       console.log({ moviesList });
+        collections.forEach((collection) => {
+          const movies: Movie[] = [];
+          const moviesID: string[] = collection?.['movies'];
+          console.log(collection);
+          moviesID.forEach((movie) => {
+            this.movieService.getMovieById(movie).subscribe((movie: Movie) => {
+              movies.push(movie);
+            });
+          });
+          moviesList.push({
+            movies: movies,
+            url: (collection?.['name'] as string).toLowerCase(),
+            listName: collection?.['name']
+          });
+        });
+        console.log({ moviesList });
+      }
+    });
+    return moviesList;
+  }
+
+  // public async getMoviesList(): Promise<MoviesList[]> {
+  //   const moviesList: MoviesList[] = [];
+
+  //   const uid = await firstValueFrom(this.authService.getUid());
+  //   if (!uid) return [];
+
+  //   const collections = await this.getUserCollections(uid);
+
+  //   for (const collection of collections) {
+  //     const movieIds: string[] = collection?.['movies'] || [];
+  //     const movies: Movie[] = [];
+
+  //     for (const id of movieIds) {
+  //       const movie = await firstValueFrom(this.movieService.getMovieById(id));
+  //       movies.push(movie);
   //     }
-  //   });
+
+  //     moviesList.push({
+  //       movies,
+  //       url: (collection?.['name'] as string).toLowerCase(),
+  //       listName: collection?.['name']
+  //     });
+  //   }
+
   //   return moviesList;
   // }
 
-  public async getMoviesList(): Promise<MoviesList[]> {
-    const moviesList: MoviesList[] = [];
+  public async getCollectionNamesFromCurrentUser(): Promise<string[]> {
+    const uid = this.authService.getCurrentUid();
+    if (!uid) throw new Error('Usuario no autenticado');
+    return await this.getCollectionNames(uid);
+  }
 
-    const uid = await firstValueFrom(this.authService.getUid());
-    if (!uid) return [];
+  private async getCollectionNames(uid: string): Promise<string[]> {
+    const userRef = doc(this.firestore, `users/${uid}`);
+    const userSnap = await getDoc(userRef);
 
-    const collections = await this.getUserCollections(uid);
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      const collections = userData?.['collections'] || [];
 
-    for (const collection of collections) {
-      const movieIds: string[] = collection?.['movies'] || [];
-      const movies: Movie[] = [];
-
-      for (const id of movieIds) {
-        const movie = await firstValueFrom(this.movieService.getMovieById(id));
-        movies.push(movie);
-      }
-
-      moviesList.push({
-        movies,
-        url: (collection?.['name'] as string).toLowerCase(),
-        listName: collection?.['name']
-      });
+      return collections.map((collection: any) => collection.name);
+    } else {
+      throw new Error('Usuario no encontrado');
     }
-
-    return moviesList;
   }
 
   private async getUserCollections(uid: string): Promise<any[]> {

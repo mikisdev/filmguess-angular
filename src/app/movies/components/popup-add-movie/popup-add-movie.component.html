@@ -1,0 +1,15 @@
+<custom-popup [isVisible]="isVisible" (isVisibleChange)="close($event)">
+  <h2 class="text-xl font-bold mb-5">Añade la pelicula a una de tus listas</h2>
+  <select [(ngModel)]="selectedList" class="block w-full border border-gray-300 rounded-md p-2">
+    <option [ngValue]="null" disabled>-- Selecciona una lista --</option>
+    <option *ngFor="let li of lists" [value]="li">{{ li }}</option>
+  </select>
+  <div class="flex justify-end">
+    <button
+      (click)="onCreate(selectedList)"
+      class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 mt-5 rounded-3xl w-24"
+    >
+      Añadir
+    </button>
+  </div>
+</custom-popup>
