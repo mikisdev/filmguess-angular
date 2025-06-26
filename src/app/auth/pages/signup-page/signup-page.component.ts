@@ -27,7 +27,14 @@ export class SignupPageComponent {
       {
         userName: ['', [Validators.required, Validators.minLength(6)]],
         email: ['', [Validators.required, Validators.pattern(this.validationsService.emailPattern)]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/)
+          ]
+        ],
         confirmPassword: ['', [Validators.required]]
       },
       {

@@ -16,8 +16,8 @@
     (is-focused)="isPasswordFocused = $event"
   />
   <span class="text-sm self-start flex items-start gap-1">
-    <mat-icon class="text-sm">report</mat-icon>La contraseña debe tener más de 6 caractéres, y al menos una letra y
-    símbolo
+    <mat-icon class="text-sm">report</mat-icon>La contraseña debe tener más de 6 caractéres, y al menos una letra,
+    símbolo y número
   </span>
   <span *ngIf="isValidField('password')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>La contraseña no es segura
