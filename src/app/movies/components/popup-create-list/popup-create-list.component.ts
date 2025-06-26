@@ -30,6 +30,7 @@ export class PopupCreateListComponent {
         console.error(error);
       } finally {
         this.isVisible = false;
+        this.isVisibleChange.emit(false);
         this.form.reset();
       }
     }
