@@ -10,12 +10,13 @@
 </button>
 
 <ng-template [ngIf]="moviesList.length !== 0">
-  <movies-list *ngFor="let item of moviesList" [movies-list]="item"></movies-list>
+  <movies-list
+    [is-removable]="true"
+    *ngFor="let item of moviesList"
+    [movies-list]="item"
+    (is-loading)="onLoad()"
+  ></movies-list>
 </ng-template>
 
-<popup-create-list
-  [is-visible]="showCreateList"
-  (is-visible-change)="showCreateList = $event"
-  (on-create)="loadCollections()"
->
+<popup-create-list [is-visible]="showCreateList" (is-visible-change)="showCreateList = $event" (on-create)="onLoad()">
 </popup-create-list>

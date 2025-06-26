@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { updateDoc, arrayUnion, doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { updateDoc, arrayUnion, doc, Firestore, getDoc, collection } from '@angular/fire/firestore';
 import { MoviesList } from '../interfaces/movies-list.interface';
 import { AuthService } from '../../auth/services/auth.service';
 import { Movie } from '../../shared/interfaces/movie.interface';
 import { MovieService } from './movies.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, from, of, switchMap, take } from 'rxjs';
+import { Collection } from './models/collection.model';
+import { error } from 'console';
 
 @Injectable({ providedIn: 'root' })
 export class MovieCollectionService {
@@ -14,75 +16,119 @@ export class MovieCollectionService {
     private movieService: MovieService
   ) {}
 
-  public addNewCollection(collectionName: string) {
-    this.authService.getUid().subscribe((uid) => {
-      if (uid) {
-        const userRef = doc(this.firestore, `users/${uid}`);
-        const newCollection = {
-          name: collectionName,
-          movies: []
-        };
+  public async addNewCollection(collectionName: string): Promise<void> {
+    try {
+      const uid = await firstValueFrom(this.authService.getUid().pipe(take(1)));
+      if (!uid) return;
 
-        return updateDoc(userRef, {
-          collections: arrayUnion(newCollection)
-        });
-      }
-      return null;
-    });
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userSnapshot = await getDoc(userRef);
+      if (!userSnapshot.exists()) return;
+
+      const userData = userSnapshot.data();
+      const existingCollections: Collection[] = userData.collections || [];
+
+      const collectionExists = existingCollections.some((c) => c.name.toLowerCase() === collectionName.toLowerCase());
+      if (collectionExists) return;
+
+      const newCollection: Collection = {
+        name: collectionName,
+        movies: []
+      };
+
+      await updateDoc(userRef, {
+        collections: arrayUnion(newCollection)
+      });
+    } catch (error) {
+      console.error('Error al crear colección:', error);
+      throw error;
+    }
   }
 
-  public async addMovieToCollection(collectionName: string, movieId: number) {
-    this.authService.getUid().subscribe(async (uid) => {
-      if (uid) {
-        const userRef = doc(this.firestore, `users/${uid}`);
-        const userSnap = await getDoc(userRef);
+  public async addMovieToCollection(collectionName: string, movieId: number): Promise<void> {
+    try {
+      const uid = await firstValueFrom(this.authService.getUid());
 
-        if (userSnap.exists()) {
-          const userData = userSnap.data();
-          const collections = userData['collections'] || [];
+      if (!uid) throw new Error('Usuario no autenticado');
 
-          const updatedCollections = collections.map((col: any) => {
-            if (col.name === collectionName) {
-              // Evita duplicados
-              if (!col.movies.includes(movieId)) {
-                return {
-                  ...col,
-                  movies: [...col.movies, movieId]
-                };
-              }
-            }
-            return col;
-          });
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userSnap = await getDoc(userRef);
 
-          return updateDoc(userRef, { collections: updatedCollections });
-        } else {
-          throw new Error('Usuario no encontrado');
-        }
-      }
-    });
-  }
+      if (!userSnap.exists()) throw new Error('Usuario no encontrado');
 
-  public async removeMovieFromCollection(uid: string, collectionName: string, movieId: string) {
-    const userRef = doc(this.firestore, `users/${uid}`);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
       const userData = userSnap.data();
-      const collections = userData['collections'] || [];
+      const collections: Collection[] = userData['collections'] || [];
 
-      const updatedCollections = collections.map((col: any) => {
+      const updatedCollections = collections.map((col: Collection) => {
         if (col.name === collectionName) {
-          return {
-            ...col,
-            movies: col.movies.filter((id: string) => id !== movieId)
-          };
+          if (!col.movies.includes(movieId)) {
+            return {
+              ...col,
+              movies: [...col.movies, movieId]
+            };
+          }
         }
         return col;
       });
 
-      return updateDoc(userRef, { collections: updatedCollections });
-    } else {
-      throw new Error('Usuario no encontrado');
+      await updateDoc(userRef, { collections: updatedCollections });
+    } catch (error) {
+      console.error('Error al agregar película a la colección:', error);
+      throw error;
+    }
+  }
+
+  public async removeCollection(collectionName: string): Promise<void> {
+    try {
+      const uid = await firstValueFrom(this.authService.getUid());
+
+      if (!uid) throw new Error('Usuario no autenticado');
+
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        const collections: Collection[] = userData['collections'] || [];
+        const updatedCollections: Collection[] = collections.filter((collection) => collection.name !== collectionName);
+        return updateDoc(userRef, { collections: updatedCollections });
+      } else {
+        throw new Error('Usuario no encontrado');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async removeMovieFromCollection(collectionName: string, movieId: number): Promise<void> {
+    try {
+      const uid = await firstValueFrom(this.authService.getUid());
+
+      if (!uid) throw new Error('Usuario no autenticado');
+
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        const collections = userData['collections'] || [];
+
+        const updatedCollections = collections.map((col: Collection) => {
+          if (col.name === collectionName) {
+            return {
+              ...col,
+              movies: col.movies.filter((id: number) => id !== movieId)
+            };
+          }
+          return col;
+        });
+
+        return updateDoc(userRef, { collections: updatedCollections });
+      } else {
+        throw new Error('Usuario no encontrado');
+      }
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -112,33 +158,6 @@ export class MovieCollectionService {
     });
     return moviesList;
   }
-
-  // public async getMoviesList(): Promise<MoviesList[]> {
-  //   const moviesList: MoviesList[] = [];
-
-  //   const uid = await firstValueFrom(this.authService.getUid());
-  //   if (!uid) return [];
-
-  //   const collections = await this.getUserCollections(uid);
-
-  //   for (const collection of collections) {
-  //     const movieIds: string[] = collection?.['movies'] || [];
-  //     const movies: Movie[] = [];
-
-  //     for (const id of movieIds) {
-  //       const movie = await firstValueFrom(this.movieService.getMovieById(id));
-  //       movies.push(movie);
-  //     }
-
-  //     moviesList.push({
-  //       movies,
-  //       url: (collection?.['name'] as string).toLowerCase(),
-  //       listName: collection?.['name']
-  //     });
-  //   }
-
-  //   return moviesList;
-  // }
 
   public async getCollectionNamesFromCurrentUser(): Promise<string[]> {
     const uid = this.authService.getCurrentUid();
