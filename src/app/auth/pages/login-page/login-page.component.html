@@ -1,4 +1,4 @@
-<div [formGroup]="loginForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
+<form [formGroup]="loginForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
   <h2 class="text-lg font-bold">Inicio de sesión</h2>
 
   <custom-input formControlName="email" [placeholder]="'Correo Electrónico'" [type]="'email'" />
@@ -11,11 +11,11 @@
   </span>
 
   <span *ngIf="isLoginFailed" class="text-base text-red-500 flex items-start gap-1">
-    <mat-icon class="text-base">cancel</mat-icon>{{errorMessage}}
+    <mat-icon class="text-base">cancel</mat-icon>{{ errorMessage }}
   </span>
   <button (click)="onLogin()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
     Iniciar sesión
   </button>
   <a [routerLink]="'../sign-up'" class="text-sm text-white underline decoration-1">¿Aún no tienes una cuenta?</a>
   <a href="#" class="text-sm text-white underline decoration-1">¿Has olvidado tu contraseña?</a>
-</div>
+</form>

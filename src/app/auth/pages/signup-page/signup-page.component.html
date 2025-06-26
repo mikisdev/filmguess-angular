@@ -1,4 +1,4 @@
-<div [formGroup]="signupForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
+<form [formGroup]="signupForm" class="flex flex-col items-center mx-auto mt-16 w-72 md:w-96 gap-5">
   <h2 class="text-lg font-bold">Crear cuenta</h2>
 
   <custom-input formControlName="userName" [placeholder]="'Nombre de Usuario'" [type]="'text'" />
@@ -9,8 +9,12 @@
   <span *ngIf="isValidField('email')" class="text-sm text-red-500 self-start flex items-center gap-1">
     <mat-icon class="text-sm">warning</mat-icon>El correo electrónico no es válido
   </span>
-  <custom-input formControlName="password" [placeholder]="'Contraseña'" [type]="'password'"
-    (is-focused)="isPasswordFocused = $event" />
+  <custom-input
+    formControlName="password"
+    [placeholder]="'Contraseña'"
+    [type]="'password'"
+    (is-focused)="isPasswordFocused = $event"
+  />
   <span class="text-sm self-start flex items-start gap-1">
     <mat-icon class="text-sm">report</mat-icon>La contraseña debe tener más de 6 caractéres, y al menos una letra y
     símbolo
@@ -24,10 +28,10 @@
   </span>
 
   <span *ngIf="isSignupFailed" class="text-base text-red-500 flex items-start gap-1">
-    <mat-icon class="text-base">cancel</mat-icon>{{errorMessage}}
+    <mat-icon class="text-base">cancel</mat-icon>{{ errorMessage }}
   </span>
   <button (click)="onSignup()" class="bg-[#2b2b2b] hover:bg-[#333333] text-white font-bold py-2 px-4 rounded-3xl">
     Registrarse
   </button>
   <a [routerLink]="'../auth'" class="text-sm text-white underline decoration-1">Ya tengo una cuenta</a>
-</div>
+</form>

@@ -1,5 +1,5 @@
 <custom-popup [isVisible]="isVisible" (isVisibleChange)="close($event)">
-  <div class="flex flex-col" [formGroup]="form">
+  <form class="flex flex-col" [formGroup]="form">
     <h2 class="text-xl font-bold mb-5">Crea una nueva lista</h2>
     <custom-input formControlName="list" [placeholder]="'Nueva Lista'" [type]="'text'"></custom-input>
 
@@ -11,5 +11,5 @@
         Crear
       </button>
     </div>
-  </div>
+  </form>
 </custom-popup>
